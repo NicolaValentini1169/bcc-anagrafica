@@ -20,9 +20,6 @@ import java.util.Set;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
-
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
@@ -41,22 +38,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-
         } catch (Exception e) {
-
-            log.error("Could not set user authentication in it.omicronconsulting.deliverone.security context", e);
-
+            log.error("Could not set user authentication in eu.winwinit.bcc.security context", e);
         }
 
         filterChain.doFilter(request, response);
-
-
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(HEADER_STRING);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
-            return bearerToken.substring(TOKEN_PREFIX.length(), bearerToken.length());
+        String bearerToken = request.getHeader(SecurityConstants.HEADER_STRING);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            return bearerToken.substring(SecurityConstants.TOKEN_PREFIX.length());
         } else if (StringUtils.hasText(bearerToken)) {
             return bearerToken;
         }
