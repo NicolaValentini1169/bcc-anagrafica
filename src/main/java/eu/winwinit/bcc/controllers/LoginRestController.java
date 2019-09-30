@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 import java.sql.SQLException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class LoginRestController {
     private Logger log = LoggerFactory.getLogger(LoginRestController.class);
 
