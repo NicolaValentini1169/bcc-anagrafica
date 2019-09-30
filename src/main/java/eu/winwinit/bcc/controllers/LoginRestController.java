@@ -6,10 +6,12 @@ import eu.winwinit.bcc.security.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -50,6 +54,22 @@ public class LoginRestController {
 
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, authentication.getName(), authentication.getAuthorities()));
 
+    }
+
+    @RequestMapping(value = "checkToken", method = RequestMethod.POST)
+    public ResponseEntity<?> checkToken(@RequestBody String jwt) {
+
+        String matricola = "";
+        Collection<? extends GrantedAuthority> roles = new HashSet<>();
+
+        boolean isValid = jwtTokenProvider.validateToken(jwt);
+
+        if (isValid) {
+            matricola = jwtTokenProvider.getUsernameFromJWT(jwt);
+            roles = jwtTokenProvider.getRolesFromJWT(jwt);
+        }
+
+        return isValid ? ResponseEntity.ok(new JwtAuthenticationResponse(jwt, matricola, roles)) : new ResponseEntity<>("Invalid JWT token", HttpStatus.UNAUTHORIZED);
     }
 
 }
