@@ -1,4 +1,4 @@
-package eu.winwinit.bcc;
+package eu.winwinit.bcc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
