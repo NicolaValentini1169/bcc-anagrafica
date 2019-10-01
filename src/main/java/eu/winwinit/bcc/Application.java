@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("eu.winwinit.bcc.controllers")
 @ComponentScan("eu.winwinit.bcc.security")
 @ComponentScan("eu.winwinit.bcc.config")
+@ComponentScan("eu.winwinit.bcc.advices")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
