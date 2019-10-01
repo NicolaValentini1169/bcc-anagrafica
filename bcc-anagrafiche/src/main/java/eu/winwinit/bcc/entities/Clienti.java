@@ -1,9 +1,8 @@
 package eu.winwinit.bcc.entities;
 // Generated 1-ott-2019 15.44.52 by Hibernate Tools 4.3.5.Final
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +44,7 @@ public class Clienti implements java.io.Serializable {
 	private Boolean firma;
 	private String codice;
 	private Boolean confermato;
-	private Set<VariazioniClienti> variazioniClienti = new HashSet<VariazioniClienti>(0);
+	private ArrayList<VariazioniClienti> variazioniClienti = new ArrayList<VariazioniClienti>();
 
 	public Clienti() {
 	}
@@ -61,7 +60,7 @@ public class Clienti implements java.io.Serializable {
 
 	public Clienti(Filiali filiali, String nag, String cab, String nome, Date dataNascita, String telefono,
 			String email, Boolean p1, Boolean p2, Boolean p3, Boolean p4, Boolean p5, Boolean p6, Boolean p7,
-			Boolean firma, String codice, Boolean confermato, Set<VariazioniClienti> variazioniClienti) {
+			Boolean firma, String codice, Boolean confermato, ArrayList<VariazioniClienti> variazioniClienti) {
 		this.filiali = filiali;
 		this.nag = nag;
 		this.cab = cab;
@@ -250,11 +249,11 @@ public class Clienti implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "clienti")
-	public Set<VariazioniClienti> getVariazioniClientis() {
+	public ArrayList<VariazioniClienti> getVariazioniClientis() {
 		return this.variazioniClienti;
 	}
 
-	public void setVariazioniClientis(Set<VariazioniClienti> variazioniClientis) {
+	public void setVariazioniClientis(ArrayList<VariazioniClienti> variazioniClientis) {
 		this.variazioniClienti = variazioniClientis;
 	}
 

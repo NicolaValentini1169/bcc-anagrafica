@@ -1,8 +1,7 @@
 package eu.winwinit.bcc.entities;
 // Generated 1-ott-2019 15.44.52 by Hibernate Tools 4.3.5.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,8 +22,8 @@ public class Filiali implements java.io.Serializable {
 	private String nome;
 	private Integer codice;
 	private String cab;
-	private Set<Clienti> clientis = new HashSet<Clienti>(0);
-	private Set<Utenti> utentis = new HashSet<Utenti>(0);
+	private ArrayList<Clienti> clienti = new ArrayList<Clienti>();
+	private ArrayList<Utenti> utenti = new ArrayList<Utenti>();
 
 	public Filiali() {
 	}
@@ -34,12 +33,12 @@ public class Filiali implements java.io.Serializable {
 		this.cab = cab;
 	}
 
-	public Filiali(String nome, Integer codice, String cab, Set<Clienti> clientis, Set<Utenti> utentis) {
+	public Filiali(String nome, Integer codice, String cab, ArrayList<Clienti> clienti, ArrayList<Utenti> utenti) {
 		this.nome = nome;
 		this.codice = codice;
 		this.cab = cab;
-		this.clientis = clientis;
-		this.utentis = utentis;
+		this.clienti = clienti;
+		this.utenti = utenti;
 	}
 
 	@Id
@@ -82,21 +81,21 @@ public class Filiali implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "filiali")
-	public Set<Clienti> getClientis() {
-		return this.clientis;
+	public ArrayList<Clienti> getClienti() {
+		return this.clienti;
 	}
 
-	public void setClientis(Set<Clienti> clientis) {
-		this.clientis = clientis;
+	public void setClienti(ArrayList<Clienti> clienti) {
+		this.clienti = clienti;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "filiali")
-	public Set<Utenti> getUtentis() {
-		return this.utentis;
+	public ArrayList<Utenti> getUtenti() {
+		return this.utenti;
 	}
 
-	public void setUtentis(Set<Utenti> utentis) {
-		this.utentis = utentis;
+	public void setUtenti(ArrayList<Utenti> utenti) {
+		this.utenti = utenti;
 	}
 
 }
