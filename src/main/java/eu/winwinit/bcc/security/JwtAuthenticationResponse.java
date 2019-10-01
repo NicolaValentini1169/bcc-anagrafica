@@ -9,11 +9,13 @@ public class JwtAuthenticationResponse {
     private String tokenType = "Bearer";
     private String username;
     private Collection<? extends GrantedAuthority> roles;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtAuthenticationResponse(String accessToken, String username, Collection<? extends GrantedAuthority> roles) {
+    public JwtAuthenticationResponse(String accessToken, String username, Collection<? extends GrantedAuthority> roles, Collection<? extends GrantedAuthority> authorities) {
         this.accessToken = accessToken;
         this.username = username;
         this.roles = roles;
+        this.authorities = authorities;
     }
 
     public String getAccessToken() {

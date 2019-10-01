@@ -22,6 +22,7 @@ public class JwtTokenProvider {
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXIPIRATION_TIME))
                 .claim("roles", authentication.getAuthorities())
+                .claim("authorities", authentication.getAuthorities())
                 .claim("attribute1", "ciao")  //TODO: da leggere da tabella se necessario
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
@@ -69,6 +70,21 @@ public class JwtTokenProvider {
 
             newList.add(new SimpleGrantedAuthority(grantedAuthority.get("authority")));
 
+        }
+
+        return newList;
+    }
+
+    public Set<GrantedAuthority> getAuthoritiesFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SecurityConstants.SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+
+        List<LinkedHashMap<String, String>> roles = (List<LinkedHashMap<String, String>>) claims.get("roles");
+        Set<GrantedAuthority> newList = new HashSet<>();
+        for (LinkedHashMap<String, String> grantedAuthority : roles) {
+            newList.add(new SimpleGrantedAuthority(grantedAuthority.get("authority")));
         }
 
         return newList;

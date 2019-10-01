@@ -2,6 +2,7 @@ package eu.winwinit.bcc.config;
 
 import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
 import eu.winwinit.bcc.security.JwtAuthenticationFilter;
+import eu.winwinit.bcc.security.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 @Configuration
 @EnableWebSecurity
@@ -42,8 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                    .antMatchers(
+                .and().authorizeRequests().antMatchers(
                             "/api/v1/login",
                             "/api/v1/checkToken",
                             "/v2/api-docs",
@@ -64,12 +65,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                    .withUser("user").password("{noop}password").roles("USER")
-                .and()
-                    .withUser("manager").password("{noop}password").authorities("WRITE_PRIVILEGES", "READ_PRIVILEGES").roles("MANAGER");
+                .withUser("user")
+                .password("{noop}password")
+                .roles(SecurityConstants.ROLE_USER);
+//        Alternativamente si possono usare le authorities (permessi)
+//                .authorities("ReadOnly")
+        auth.inMemoryAuthentication()
+                    .withUser("admin")
+                .password("{noop}password")
+                .roles(SecurityConstants.ROLE_ADMIN);
+//        Alternativamente si possono usare le authorities (permessi)
+//                .authorities("ReadOnly", "ReadWrite")
         //TODO: Autenticazione da DB
-
-        //                ldapAuthentication().contextSource(contextSource()).userSearchFilter("sAMAccountName={0}").ldapAuthoritiesPopulator(customLdapAuthoritiesPopulator);
     }
 
 }

@@ -8,6 +8,4 @@ public class SecurityConstants {
     //Authentication roles
     public static final String ROLE_USER = "USER";
     public static final String ROLE_ADMIN = "ADMIN";
-    public static final String READ_PERMISSION = "READ_PRIVILEGES";
-    public static final String WRITE_PERMISSION = "WRITE_PRIVILEGES";
 }

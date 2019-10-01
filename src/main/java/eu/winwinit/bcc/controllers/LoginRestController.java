@@ -52,7 +52,7 @@ public class LoginRestController {
 
         String jwt = jwtTokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, authentication.getName(), authentication.getAuthorities()));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, authentication.getName(), null, authentication.getAuthorities()));
 
     }
 
@@ -61,15 +61,17 @@ public class LoginRestController {
 
         String matricola = "";
         Collection<? extends GrantedAuthority> roles = new HashSet<>();
+        Collection<? extends GrantedAuthority> authorities = new HashSet<>();
 
         boolean isValid = jwtTokenProvider.validateToken(jwt);
 
         if (isValid) {
             matricola = jwtTokenProvider.getUsernameFromJWT(jwt);
             roles = jwtTokenProvider.getRolesFromJWT(jwt);
+            authorities = jwtTokenProvider.getAuthoritiesFromJWT(jwt);
         }
 
-        return isValid ? ResponseEntity.ok(new JwtAuthenticationResponse(jwt, matricola, roles)) : new ResponseEntity<>("Invalid JWT token", HttpStatus.UNAUTHORIZED);
+        return isValid ? ResponseEntity.ok(new JwtAuthenticationResponse(jwt, matricola, roles, authorities)) : new ResponseEntity<>("Invalid JWT token", HttpStatus.UNAUTHORIZED);
     }
 
 }
