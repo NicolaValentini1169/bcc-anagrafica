@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("eu.winwinit.bcc.security")
 @ComponentScan("eu.winwinit.bcc.config")
 @ComponentScan("eu.winwinit.bcc.advices")
+@ComponentScan("eu.winwinit.bcc.util")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

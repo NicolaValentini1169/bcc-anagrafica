@@ -1,8 +1,5 @@
 package eu.winwinit.bcc.config;
 
-import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
-import eu.winwinit.bcc.security.JwtAuthenticationFilter;
-import eu.winwinit.bcc.security.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
+import eu.winwinit.bcc.security.JwtAuthenticationFilter;
+import eu.winwinit.bcc.security.SecurityConstants;
 
 @Configuration
 @EnableWebSecurity

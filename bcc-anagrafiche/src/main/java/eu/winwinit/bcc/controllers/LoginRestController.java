@@ -1,8 +1,11 @@
 package eu.winwinit.bcc.controllers;
 
-import eu.winwinit.bcc.model.UserCredentials;
-import eu.winwinit.bcc.security.JwtAuthenticationResponse;
-import eu.winwinit.bcc.security.JwtTokenProvider;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashSet;
+
+import javax.naming.NamingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.naming.NamingException;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashSet;
+import eu.winwinit.bcc.model.UserCredentials;
+import eu.winwinit.bcc.security.JwtAuthenticationResponse;
+import eu.winwinit.bcc.security.JwtTokenProvider;
 
 @RestController
 @RequestMapping("/api/v1")
