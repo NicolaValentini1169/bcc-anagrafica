@@ -71,9 +71,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                     .withUser("admin")
                 .password("{noop}password")
-                .roles(SecurityConstants.ROLE_ADMIN);
+                .roles(SecurityConstants.ROLE_USER, SecurityConstants.ROLE_ADMIN);
 //        Alternativamente si possono usare le authorities (permessi)
 //                .authorities("ReadOnly", "ReadWrite")
+        auth.inMemoryAuthentication()
+                .withUser("guest")
+                .password("{noop}password")
+                .roles(SecurityConstants.ROLE_GUEST);
         //TODO: Autenticazione da DB
     }
 
