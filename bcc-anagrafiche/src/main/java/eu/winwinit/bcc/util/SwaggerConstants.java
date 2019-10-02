@@ -1,4 +1,4 @@
-package eu.winwinit.bcc.config;
+package eu.winwinit.bcc.util;
 
 public class SwaggerConstants {
 
