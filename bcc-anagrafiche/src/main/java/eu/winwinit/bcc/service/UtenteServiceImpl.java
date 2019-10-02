@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,7 +61,10 @@ public class UtenteServiceImpl implements UtenteService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Utente user = utenteRepository.findByUsername(username);
 		if (user == null){
-			throw new UsernameNotFoundException("Invalid username or password.");
+			throw new UsernameNotFoundException("Username non valida.");
+		}
+		if(!user.getStatoAttivo()) {
+			throw new DisabledException("Utente disabilitato.");
 		}
 		Collection<String> roles = mapRoles(user.getRuoliUtenti());
 		return new org.springframework.security.core.userdetails.User(user.getUsername(),

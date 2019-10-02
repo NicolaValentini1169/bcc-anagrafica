@@ -88,7 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("guest")
 //                .password("{noop}password")
 //                .roles(SecurityConstants.ROLE_GUEST);
-//        //TODO: Autenticazione da DB
 //    }
     
     @Bean
