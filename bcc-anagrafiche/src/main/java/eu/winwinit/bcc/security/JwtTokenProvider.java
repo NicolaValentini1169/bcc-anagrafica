@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -34,13 +35,13 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + EXIPIRATION_TIME))
                 .claim("roles", authentication.getAuthorities())
                 .claim("attribute1", "ciao")  //TODO: da leggere da tabella se necessario
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
+                .signWith(SignatureAlgorithm.HS512, AuthorityRolesConstants.SECRET)
                 .compact();
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(AuthorityRolesConstants.SECRET).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT Signature");
@@ -59,7 +60,7 @@ public class JwtTokenProvider {
 
     public String getUsernameFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
+                .setSigningKey(AuthorityRolesConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -68,7 +69,7 @@ public class JwtTokenProvider {
 
     public Set<GrantedAuthority> getRolesFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
+                .setSigningKey(AuthorityRolesConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
 
