@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("eu.winwinit.bcc.controllers")
 @ComponentScan("eu.winwinit.bcc.config")
 @EntityScan("eu.winwinit.bcc.entities")
+@ComponentScan("eu.winwinit.bcc.util")
 @ComponentScan("eu.winwinit.bcc.repository")
 @ComponentScan("eu.winwinit.bcc.security")
 public class Application {
