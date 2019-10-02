@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class UtilClass {
 
-	
 	public static Set<String> fromGrantedAuthorityToStringSet(Set<GrantedAuthority> grantedAuthoritySet) {
 		Set<String> rolesSetString = new HashSet<>();
 		for (GrantedAuthority grantedAuthority: grantedAuthoritySet) {
