@@ -19,6 +19,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
 import eu.winwinit.bcc.security.JwtAuthenticationFilter;
@@ -106,6 +109,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
+    
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }    
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
