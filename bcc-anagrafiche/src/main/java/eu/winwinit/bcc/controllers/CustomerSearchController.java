@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import eu.winwinit.bcc.entities.Clienti;
+import eu.winwinit.bcc.entities.Cliente;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -22,7 +22,7 @@ public class CustomerSearchController {
     private Logger log = LoggerFactory.getLogger(CustomerSearchController.class);
 
     @RequestMapping(value = "customer-search", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Clienti>> customerSearch(
+    public ResponseEntity<ArrayList<Cliente>> customerSearch(
     		@RequestParam(value="idFiliale", required=false) Integer idFiliale,
     		@RequestParam(value="nag", required=false) String nag,
     		@RequestParam(value="nome", required=false) String nome,
@@ -31,13 +31,13 @@ public class CustomerSearchController {
     	
     	log.debug("customerSearch() START");
 
-        ArrayList<Clienti> listaClienti = mockListaClienti();
+        ArrayList<Cliente> listaCliente = mockListaCliente();
         
-    	return ResponseEntity.ok(listaClienti);
+    	return ResponseEntity.ok(listaCliente);
     }
 
-	private ArrayList<Clienti> mockListaClienti() {
-		ArrayList<Clienti> listaClienti = new ArrayList<Clienti>();
+	private ArrayList<Cliente> mockListaCliente() {
+		ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
 		final int MOCK_LIST_SIZE = 12; 
 		for (int i=0; i<MOCK_LIST_SIZE; i++) {
 			
@@ -45,7 +45,7 @@ public class CustomerSearchController {
 			if (i>5) {
 				flagConfermato=false;
 			}
-			Clienti clienti = new Clienti(
+			Cliente cliente = new Cliente(
 					null, 
 					"nag"+i, 
 					"cab"+i, 
@@ -62,16 +62,16 @@ public class CustomerSearchController {
 	                true,
 	                false,
 	                "codice"+i,
-	                flagConfermato,
-	                null
+	                flagConfermato
+//	                null
 					);
-			clienti.setId(i);
-			listaClienti.add(clienti);
+			cliente.setId(i);
+			listaCliente.add(cliente);
 		}
-		return listaClienti;
+		return listaCliente;
 	}
 
-	private Clienti mockCliente() {
+	private Cliente mockCliente() {
 		// TODO Auto-generated method stub
 		return null;
 	}
