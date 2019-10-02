@@ -6,7 +6,7 @@ class AnagraficaDaVerificare extends Component {
     render() { 
         return ( 
             <React.Fragment>
-                <h3 className="text-left ml-4 mt-3 mb-3">Cliente</h3>
+                <h3 className="text-left ml-4 mt-3 mb-3">Cliente <button className="btn btn-primary" onClick={() => this.props.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button></h3>
             <div className="verifyRegistry row">
                 <label className="col-md-7 text-left font-weight-bold mt-5">{LABELS.NAG}</label>
                 <label className="col-md-5 text-left font-weight-bold mt-2 underlined">{LABELS.CAMPI_MODIFICATI}</label>

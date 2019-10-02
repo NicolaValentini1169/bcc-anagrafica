@@ -26,5 +26,7 @@ export const LABELS={
     EMAIL: "Email:",
     PRIVACY: "Privacy:",
     FIRMA_GRAFOMETRICA: "Firma grafometrica:",
-    CONFERMA: "Conferma"
+    CONFERMA: "Conferma",
+    DETTAGLIO: "Dettaglio",
+    TORNA_ALLA_LISTA: "Torna alla lista"
 }

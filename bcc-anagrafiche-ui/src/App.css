@@ -133,3 +133,14 @@ body, html {
 .checkBox {
   margin-top: 5px;
 }
+
+.tableClienti {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  width: 98%;
+}
+
+.bottoneDettaglio {
+  border-bottom: 1px black solid;
+}

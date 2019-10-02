@@ -1,4 +1,6 @@
 {
-    "apiLoginEndpoint": "[REACT_APP_URL_JAVA]/api/v1/login"
+    "apiLoginEndpoint": "[REACT_APP_URL_JAVA]/api/v1/login",
+    "apiFilialiEndpoint": "[REACT_APP_URL_JAVA]/api/v1/branch-search",
+    "apiClienteEndpoint": "[REACT_APP_URL_JAVA]/api/v1/customer-search"
   }
   

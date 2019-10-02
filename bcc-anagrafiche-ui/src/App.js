@@ -16,7 +16,9 @@ class App extends Component {
   state = { 
     userType: null,
     username: "",
-    roles: []
+    roles: [],
+    filiali: [],
+    clienti: []
    }
 
    componentWillMount() {
@@ -41,9 +43,12 @@ class App extends Component {
     axios.post(config.apiLoginEndpoint, loginRequest, conf)
     .then(response => {console.log(response)
         roles = [...response.data.roles];
-        this.setState({roles: roles, username: response.data.username, userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
+        localStorage.setItem("TOKEN", response.data.accessToken);
+        this.setState({roles: roles, username: response.data.username,
+           userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
         console.log(roles[0].authority, roles[0])
         if(roles.length === 1 && roles[0].authority === USER_TYPE.USER){
+          this.utilitiesForUser();
           this.props.history.push("/ricerca-clienti");
         } else {
           this.props.history.push("/importa-clienti");
@@ -53,10 +58,35 @@ class App extends Component {
     .catch(err => console.log(err));
   }
 
+  utilitiesForUser = () => {
+    this.handleFindFiliali();
+  }
+
+  handleFindFiliali = () => {
+    
+    const headers = { "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+
+    axios.get(config.apiFilialiEndpoint, conf)
+    .then(response => {this.setState({filiali: response.data})})
+    .catch(err => console.log(err))
+  }
+
   handleFindCliente = (values) => {
+    
+    const headers = { "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+    let params = {};
+    if(values.nome !== "" && values.date !== null)
+    params = {params: {"idFiliale": values.filiale, "nag": values.nag, "nome": values.nome, "dataNascita": values.date}}
+    else if(values.nome !== "" && values.date === null)
+    params = {params: {"idFiliale": values.filiale, "nag": values.nag, "nome": values.nome}}
+    else if(values.nome === "" && values.date === null)
+    params = {params: {"idFiliale": values.filiale, "nag": values.nag}}
 
-    console.log("CLIENTE", values);
-
+    axios.get(config.apiClienteEndpoint, conf)
+    .then(response => this.setState({clienti: response.data}))
+    .catch(err => console.log(err))
   }
 
   render() { 
@@ -76,7 +106,10 @@ class App extends Component {
               <Route
                 path="/ricerca-clienti"
                 exact
-                render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} username={this.state.username} userType={this.state.userType}/>}
+                render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
+                                                  username={this.state.username} userType={this.state.userType}
+                                                  filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
+                                                  clienti={this.state.clienti}/>}
               />
                <Route
                 path="/importa-clienti"

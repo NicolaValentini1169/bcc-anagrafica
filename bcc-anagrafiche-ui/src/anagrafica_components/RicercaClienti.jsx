@@ -4,16 +4,31 @@ import Select from 'react-select'
 import AnagraficaDaVerificare from './AnagraficaDaVerificare';
 import Navbar from './Navbar';
 import {LABELS} from "./common/Constants";
+import Moment from 'react-moment';
 
 export class RicercaClienti extends Component {
     state = { 
-        isSingleAndNotConfirmed: true,
+        isSingleAndNotConfirmed: false,
         isConfermata: false,
         ricerca: {
-            date: new Date(),
+            date: null,
             nome: "",
             nag: "",
             filiale: ""
+        },
+        clienti: [],
+        showListaClienti: false,
+        cliente: {}
+    }
+
+    componentWillMount() {
+        this.props.handleFindFiliali();
+    }
+
+    componentWillReceiveProps(props) {
+        console.log("nuove props", props)
+        if(props.clienti !== undefined && props.clienti.length !== 0){
+            this.setState({clienti: props.clienti, showListaClienti: true})
         }
     }
 
@@ -33,10 +48,30 @@ export class RicercaClienti extends Component {
         this.setState({ricerca});
     }
 
+    onChangeFiliale = (filiale) => {
+        console.log(filiale)
+        let ricerca = {...this.state.ricerca};
+
+        ricerca["filiale"] = filiale.value;
+
+        this.setState({ricerca});
+    }
+
     findCliente = () => {
         let ricerca = {...this.state.ricerca}
 
         this.props.handleFindCliente(ricerca);
+    }
+
+    getCliente = (cliente) => {
+        if(cliente.confermato)
+        this.setState({cliente: cliente, showListaClienti: false, isConfermata: true })
+        if(!cliente.confermato)
+        this.setState({cliente: cliente, showListaClienti: false, isSingleAndNotConfirmed: true })
+    }
+
+    tornaAllaLista = () => {
+        this.setState({showListaClienti: true, isConfermata: false, isSingleAndNotConfirmed: false});
     }
 
     render() { 
@@ -47,7 +82,15 @@ export class RicercaClienti extends Component {
             <form className="formRicercaClienti">
                 <div className="row">
                     <label className="col-1 labelForm">{LABELS.FILIALE}</label>
-                    <Select className="col-md-2" placeholder="Seleziona Filiale"/>{/*MAP VALORI IN OPTIONS*/}
+                    <Select className="col-md-2" placeholder="Seleziona Filiale" options={
+                        this.props.filiali && this.props.filiali.length !== 0 && this.props.filiali.map(filiale => {
+                            return {
+                                value: filiale.nome,
+                                label: filiale.nome
+                            }
+                        })
+                    }
+                    onChange={filiale => this.onChangeFiliale(filiale)}/>
                     
                     <label className="col-1 labelForm">{LABELS.NAG}</label>
                     <input className="col-md-2 form-control" placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nag}/>
@@ -63,9 +106,29 @@ export class RicercaClienti extends Component {
             <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>
             </form>
 
-            {/* CONDIZIONE SE LISTA DI CLIENTI */}
-            {/* MAP MOSTRO TABELLA */}
-            {/* RICORDARSI DETTAGLIO */}
+            {this.state.clienti.length !== 0 && this.state.showListaClienti ?
+            <table class="table table-striped tableClienti">
+                <thead>
+                <tr>
+                    <th scope="col">Cab</th>
+                    <th scope="col">Nag</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data di Nascita</th>
+                    <th scope="col">Dettaglio</th>
+                  </tr>
+                </thead>
+                <tbody>
+             {this.state.clienti.map(cliente => {
+                 return( <tr>
+                    <td>{cliente.cab ? cliente.cab : ""}</td>
+                    <td>{cliente.nag ? cliente.nag : ""}</td>
+                    <td>{cliente.nome ? cliente.nome : ""}</td>
+                    <td>{cliente.dataNascita ? <Moment format="DD/MM/YYYY">{cliente.dataNascita}</Moment> : ""}</td>
+                    <td><button className="btn btn-light bottoneDettaglio" onClick={() => this.getCliente(cliente)}>{LABELS.DETTAGLIO}</button></td>
+                    
+                  </tr>
+             )})} </tbody>
+              </table>: ""} 
 
             {/* ANAGRAFICA CONFERMATA */}
             {this.state.isConfermata ? 
@@ -74,11 +137,12 @@ export class RicercaClienti extends Component {
                 <p className="col-md-3 offset-md-3">{LABELS.ANAGRAFICA_CLIENTE_TEXT}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO}</p>
-                <button type="button" className="btn btn-primary col-md-1 offset-md-4">{LABELS.STAMPA}</button>
+                <button type="button" className="btn btn-primary col-md-1 offset-md-3">{LABELS.STAMPA}</button>
+                <button className="btn btn-primary col-md-2 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
                 </div>
                 : ""}
 
-            {this.state.isSingleAndNotConfirmed ? <AnagraficaDaVerificare /> : ""}
+            {this.state.isSingleAndNotConfirmed ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista}/> : ""}
             </div>
          );
     }
