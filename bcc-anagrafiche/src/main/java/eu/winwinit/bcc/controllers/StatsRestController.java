@@ -20,7 +20,7 @@ public class StatsRestController {
     private Logger log = LoggerFactory.getLogger(StatsRestController.class);
 
     @RequestMapping(value = "get-stats", method = RequestMethod.GET)
-    public ResponseEntity<?> getStats(
+    public ResponseEntity<StatisticsResponse> getStats(
     		@RequestParam(value="branch", required=false) String branch,
     		@RequestParam(value="startDate", required=false) String startDate,
     		@RequestParam(value="endDate", required=false) String endDate
