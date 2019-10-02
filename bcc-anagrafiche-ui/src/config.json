@@ -1,0 +1,4 @@
+{
+    "apiLoginEndpoint": "[REACT_APP_URL_JAVA]/api/v1/login"
+  }
+  
