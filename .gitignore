@@ -18,3 +18,9 @@ buildNumber.properties
 
 .idea/
 *.iml
+*.eclipse.wst.common.project.facet.core.xml
+*.eclipse.m2e.core.prefs
+*.eclipse.jdt.core.prefs
+*.eclipse.core.resources.prefs
+*.project
+*.classpath
