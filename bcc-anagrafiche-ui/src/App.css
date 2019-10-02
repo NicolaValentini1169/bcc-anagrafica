@@ -1,0 +1,135 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+body, html {
+  height: 100%;
+  background-repeat: no-repeat;
+  font-family: Arial !important;
+}
+
+.backgroundLogin {
+  background-color: #b3ce27;
+}
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 80%;
+  height: 100vh;
+  justify-content: center;
+}
+
+.card-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  width: 60%;
+  border: 1px #b3ce27 solid;
+  height: 70vh;
+}
+
+.containerOperation {
+  border: 1px #b3ce27 solid;
+  height: 30vh;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  flex-flow: row nowrap;
+  width: 50%;
+  margin: auto;
+  margin-top: 5% !important;
+}
+
+.login-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 27%;
+  height: 18vh;
+  margin-bottom: 4%;
+  border: 1px solid #b3ce27;
+}
+
+.form-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 60%;
+  margin: 5px;
+  margin-bottom: 8%;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-login{
+  width: 30%;
+}
+
+.formUser {
+  margin: 10px;
+}
+
+.ricercaClienti {
+  margin: 16px;
+}
+
+.formRicercaClienti {
+  border: 1px black solid;
+  height: 150px;
+  padding-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 3px;
+}
+
+.labelForm{
+  margin-top: 8px;
+}
+
+.bottoneRicerca {margin-top: 25px;}
+
+.verifyRegistry {
+  height: 80vh;
+  border: 1px black solid;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.underlined {
+  text-decoration: underline;
+}
+
+.checkBox {
+  margin-top: 5px;
+}
