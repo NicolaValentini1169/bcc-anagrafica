@@ -1,5 +1,5 @@
 package eu.winwinit.bcc.entities;
-// Generated 1-ott-2019 15.44.52 by Hibernate Tools 4.3.5.Final
+// Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +43,7 @@ public class VariazioniClienti implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_cliente", nullable = false)
+	@JoinColumn(name = "cliente", nullable = false)
 	public Clienti getClienti() {
 		return this.clienti;
 	}

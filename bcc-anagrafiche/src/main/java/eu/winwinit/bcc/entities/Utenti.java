@@ -1,5 +1,5 @@
 package eu.winwinit.bcc.entities;
-// Generated 1-ott-2019 15.44.52 by Hibernate Tools 4.3.5.Final
+// Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +21,7 @@ public class Utenti implements java.io.Serializable {
 
 	private Integer id;
 	private Filiali filiali;
+	private RuoliUtenti ruoliUtenti;
 	private String username;
 	private String nome;
 	private String cognome;
@@ -31,15 +32,17 @@ public class Utenti implements java.io.Serializable {
 	public Utenti() {
 	}
 
-	public Utenti(Filiali filiali, String username, String password) {
+	public Utenti(Filiali filiali, RuoliUtenti ruoliUtenti, String username, String password) {
 		this.filiali = filiali;
+		this.ruoliUtenti = ruoliUtenti;
 		this.username = username;
 		this.password = password;
 	}
 
-	public Utenti(Filiali filiali, String username, String nome, String cognome, String password, Boolean statoAttivo,
-			Boolean cambioPassword) {
+	public Utenti(Filiali filiali, RuoliUtenti ruoliUtenti, String username, String nome, String cognome,
+			String password, Boolean statoAttivo, Boolean cambioPassword) {
 		this.filiali = filiali;
+		this.ruoliUtenti = ruoliUtenti;
 		this.username = username;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -61,13 +64,23 @@ public class Utenti implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_filiale", nullable = false)
+	@JoinColumn(name = "filiale", nullable = false)
 	public Filiali getFiliali() {
 		return this.filiali;
 	}
 
 	public void setFiliali(Filiali filiali) {
 		this.filiali = filiali;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ruolo", nullable = false)
+	public RuoliUtenti getRuoliUtenti() {
+		return this.ruoliUtenti;
+	}
+
+	public void setRuoliUtenti(RuoliUtenti ruoliUtenti) {
+		this.ruoliUtenti = ruoliUtenti;
 	}
 
 	@Column(name = "username", unique = true, nullable = false, length = 20)

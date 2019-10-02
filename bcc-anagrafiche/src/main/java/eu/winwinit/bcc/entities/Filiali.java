@@ -1,5 +1,5 @@
 package eu.winwinit.bcc.entities;
-// Generated 1-ott-2019 15.44.52 by Hibernate Tools 4.3.5.Final
+// Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
 import java.util.ArrayList;
 import javax.persistence.Column;
