@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import eu.winwinit.bcc.entities.VariazioniClienti;
+import eu.winwinit.bcc.entities.VariazioneCliente;
 import eu.winwinit.bcc.model.MarkAsEditedRequest;
 import eu.winwinit.bcc.security.JwtTokenProvider;
 import eu.winwinit.bcc.security.SecurityConstants;
@@ -37,12 +37,12 @@ public class CustomerMarkAsEditedController {
 //	 } else if(rolesSet.contains(SecurityConstants.ROLE_USER)) {
 //	 }
 	 
-	 // mi scorro tutti i campi dell'oggetto, se ce ne sono a true vado a salvarli su VariazioniClienti
+	 // mi scorro tutti i campi dell'oggetto, se ce ne sono a true vado a salvarli su VariazioneCliente
 	 
 	 
-	 VariazioniClienti variazioniClienti = new VariazioniClienti();
+	 VariazioneCliente variazioneCliente = new VariazioneCliente();
 	 // variazione del cliente: trovare il cliente con quell'id e settarlo
-	 //variazioniClienti.setClienti(markAsEditedRequest.getId());
+	 //VariazioneCliente.setClienti(markAsEditedRequest.getId());
 	 
 	 HashMap<String, Boolean> editedHashMap = markAsEditedRequest.fieldsToHashMap(markAsEditedRequest);
 	 
@@ -51,7 +51,7 @@ public class CustomerMarkAsEditedController {
 		 Boolean value = entrySet.getValue();
 		 
 		 if(value == true) {
-			 variazioniClienti.setCampo(key);
+			 variazioneCliente.setCampo(key);
 		 }
 		 
 		 // salvo l'oggetto

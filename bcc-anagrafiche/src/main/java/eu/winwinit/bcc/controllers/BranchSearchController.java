@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import eu.winwinit.bcc.entities.Filiali;
+import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.security.JwtTokenProvider;
 import eu.winwinit.bcc.security.SecurityConstants;
 import eu.winwinit.bcc.util.UtilClass;
@@ -25,26 +25,26 @@ public class BranchSearchController {
 	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 	
 	 @RequestMapping(value = "/branch-search", method = RequestMethod.GET)
-	    public ResponseEntity<List<Filiali>> branchSearch(
+	    public ResponseEntity<List<Filiale>> branchSearch(
 	    		@RequestHeader(value=SecurityConstants.HEADER_STRING) String jwtToken) {
 		 Set<String> rolesSetString = UtilClass.fromGrantedAuthorityToStringSet(jwtTokenProvider.getRolesFromJWT(jwtToken));
-		 List<Filiali> filialiList = new ArrayList<Filiali>();
+		 List<Filiale> filialeList = new ArrayList<Filiale>();
 		 if(rolesSetString.contains("ROLE_" + SecurityConstants.ROLE_ADMIN)) {
-			 Filiali filiale1 = new Filiali();
+			 Filiale filiale1 = new Filiale();
 			 filiale1.setNome("Verona");
-			 Filiali filiale2 = new Filiali();
+			 Filiale filiale2 = new Filiale();
 			 filiale2.setNome("Padova");
-			 Filiali filiale3 = new Filiali();
+			 Filiale filiale3 = new Filiale();
 			 filiale3.setNome("Milano");
-			 filialiList.add(filiale1);
-			 filialiList.add(filiale2);
-			 filialiList.add(filiale3);
+			 filialeList.add(filiale1);
+			 filialeList.add(filiale2);
+			 filialeList.add(filiale3);
 		 } else if(rolesSetString.contains("ROLE_" + SecurityConstants.ROLE_USER)) {
-			 Filiali filiale1 = new Filiali();
+			 Filiale filiale1 = new Filiale();
 			 filiale1.setNome("Verona");
-			 filialiList.add(filiale1);
+			 filialeList.add(filiale1);
 		 }
 		 
-		 return new ResponseEntity<>(filialiList, HttpStatus.OK);
+		 return new ResponseEntity<>(filialeList, HttpStatus.OK);
 	    }
 }
