@@ -26,7 +26,7 @@ public class CustomerSearchController {
     		@RequestParam(value="idFiliale", required=false) Integer idFiliale,
     		@RequestParam(value="nag", required=false) String nag,
     		@RequestParam(value="nome", required=false) String nome,
-    		@RequestParam(value="dataNascita", required=false) String dataNascita
+    		@RequestParam(value="dataNascita", required=false) Date dataNascita
     		) throws NamingException, SQLException {
     	
     	log.debug("customerSearch() START");
