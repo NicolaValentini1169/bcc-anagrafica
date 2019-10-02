@@ -24,5 +24,11 @@ buildNumber.properties
 org.eclipse.core.resources.prefs
 org.eclipse.jdt.core.prefs
 org.eclipse.m2e.core.prefs
+*.eclipse.wst.common.project.facet.core.xml
+*.eclipse.m2e.core.prefs
+*.eclipse.jdt.core.prefs
+*.eclipse.core.resources.prefs
+*.project
+*.classpath
 org.eclipse.wst.common.project.facet.core.xml
 org.springframework.ide.eclipse.prefs

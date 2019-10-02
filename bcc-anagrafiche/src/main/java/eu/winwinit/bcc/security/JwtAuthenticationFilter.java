@@ -19,7 +19,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import eu.winwinit.bcc.constants.AuthorityRolesConstants;
-
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
