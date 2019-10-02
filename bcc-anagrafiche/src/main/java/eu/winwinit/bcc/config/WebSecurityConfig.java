@@ -2,7 +2,6 @@ package eu.winwinit.bcc.config;
 
 import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
 import eu.winwinit.bcc.security.JwtAuthenticationFilter;
-import eu.winwinit.bcc.security.SecurityConstants;
 import eu.winwinit.bcc.service.UtenteService;
 
 import javax.sql.DataSource;

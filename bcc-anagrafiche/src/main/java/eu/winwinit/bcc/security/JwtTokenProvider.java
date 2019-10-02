@@ -1,6 +1,11 @@
 package eu.winwinit.bcc.security;
 
-import io.jsonwebtoken.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -8,7 +13,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtTokenProvider {
@@ -23,13 +35,13 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + EXIPIRATION_TIME))
                 .claim("roles", authentication.getAuthorities())
                 .claim("attribute1", "ciao")  //TODO: da leggere da tabella se necessario
-                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
+                .signWith(SignatureAlgorithm.HS512, AuthorityRolesConstants.SECRET)
                 .compact();
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(AuthorityRolesConstants.SECRET).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT Signature");
@@ -48,7 +60,7 @@ public class JwtTokenProvider {
 
     public String getUsernameFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
+                .setSigningKey(AuthorityRolesConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -57,7 +69,7 @@ public class JwtTokenProvider {
 
     public Set<GrantedAuthority> getRolesFromJWT(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SecurityConstants.SECRET)
+                .setSigningKey(AuthorityRolesConstants.SECRET)
                 .parseClaimsJws(token)
                 .getBody();
 
