@@ -2,6 +2,8 @@ package eu.winwinit.bcc.model;
 
 import java.util.HashMap;
 
+import eu.winwinit.bcc.constants.ClienteConstants;
+
 public class MarkAsEditedRequest {
 
 	private Integer id;
@@ -17,15 +19,15 @@ public class MarkAsEditedRequest {
 	
 	public HashMap<String, Boolean> fieldsToHashMap(MarkAsEditedRequest markAsEditedRequest){
 		HashMap<String, Boolean> valueHashMap = new HashMap<String, Boolean>();
-		valueHashMap.put("telefono", markAsEditedRequest.getTelefono());
-		valueHashMap.put("email", markAsEditedRequest.getEmail());
-		valueHashMap.put("p1", markAsEditedRequest.getP1());
-		valueHashMap.put("p2", markAsEditedRequest.getP2());
-		valueHashMap.put("p3", markAsEditedRequest.getP3());
-		valueHashMap.put("p4", markAsEditedRequest.getP4());
-		valueHashMap.put("p5", markAsEditedRequest.getP5());
-		valueHashMap.put("p6", markAsEditedRequest.getP6());
-		valueHashMap.put("firma", markAsEditedRequest.getFirma());
+		valueHashMap.put(ClienteConstants.TELEFONO, markAsEditedRequest.getTelefono());
+		valueHashMap.put(ClienteConstants.EMAIL, markAsEditedRequest.getEmail());
+		valueHashMap.put(ClienteConstants.P1, markAsEditedRequest.getP1());
+		valueHashMap.put(ClienteConstants.P2, markAsEditedRequest.getP2());
+		valueHashMap.put(ClienteConstants.P3, markAsEditedRequest.getP3());
+		valueHashMap.put(ClienteConstants.P4, markAsEditedRequest.getP4());
+		valueHashMap.put(ClienteConstants.P5, markAsEditedRequest.getP5());
+		valueHashMap.put(ClienteConstants.P6, markAsEditedRequest.getP6());
+		valueHashMap.put(ClienteConstants.FIRMA, markAsEditedRequest.getFirma());
 		return valueHashMap;
 	}
 	
