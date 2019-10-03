@@ -2,6 +2,7 @@ package eu.winwinit.bcc.entities;
 // Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +27,7 @@ public class Filiale implements java.io.Serializable {
 	private String nome;
 	private Integer codice;
 	private String cab;
+	private Date lastModify;
 	private List<Cliente> clienti = new ArrayList<Cliente>();
 	private List<Utente> utenti = new ArrayList<Utente>();
 
@@ -82,6 +86,16 @@ public class Filiale implements java.io.Serializable {
 	public void setCab(String cab) {
 		this.cab = cab;
 	}
+
+	@Column(name = "last_modify")
+	public Date getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Date lastModify) {
+		this.lastModify = lastModify;
+	}
+
 
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "filiali")
 //	public ArrayList<Cliente> getClienti() {
