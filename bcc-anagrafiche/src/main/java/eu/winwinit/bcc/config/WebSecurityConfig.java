@@ -25,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import eu.winwinit.bcc.security.JWTAuthenticationEntryPoint;
 import eu.winwinit.bcc.security.JwtAuthenticationFilter;
-import eu.winwinit.bcc.security.SecurityConstants;
 
 @Configuration
 @EnableWebSecurity
