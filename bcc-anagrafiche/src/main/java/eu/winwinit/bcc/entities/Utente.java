@@ -66,7 +66,7 @@ public class Utente implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "filiale", nullable = false)
 	public Filiale getFiliali() {
 		return this.filiali;
