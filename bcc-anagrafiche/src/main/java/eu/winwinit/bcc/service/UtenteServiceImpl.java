@@ -1,5 +1,6 @@
 package eu.winwinit.bcc.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.entities.RuoloUtente;
 import eu.winwinit.bcc.entities.Utente;
@@ -64,15 +66,24 @@ public class UtenteServiceImpl implements UtenteService{
 		if(!user.getStatoAttivo()) {
 			throw new DisabledException("Utente disabilitato.");
 		}
+		Collection<String> roles = mapRoles(user.getRuoliUtenti());
 		return new org.springframework.security.core.userdetails.User(user.getUsername(),
 				user.getPassword(),
-				mapRolesToAuthorities(Arrays.asList("ROLE_USER")));
+				mapRolesToAuthorities(roles));
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<String> roles){
 		return roles.stream()
 				.map(role -> new SimpleGrantedAuthority(role))
 				.collect(Collectors.toList());
+	}
+	
+	private Collection<String> mapRoles(RuoloUtente ruoloUtente){
+		switch (ruoloUtente.getRuolo()) {
+		case AuthorityRolesConstants.USER : return Arrays.asList(AuthorityRolesConstants.ROLE_USER); 
+		case AuthorityRolesConstants.ADMIN : return Arrays.asList(AuthorityRolesConstants.ROLE_USER, AuthorityRolesConstants.ROLE_ADMIN); 
+		default: return new ArrayList<String>();
+		}
 	}
 
 }
