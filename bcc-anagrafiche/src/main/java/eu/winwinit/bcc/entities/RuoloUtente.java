@@ -2,6 +2,8 @@ package eu.winwinit.bcc.entities;
 // Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,6 +23,9 @@ public class RuoloUtente implements java.io.Serializable {
 
 	private Integer id;
 	private String ruolo;
+	private Integer userModify;
+	private Date lastModify;
+	
 //	private ArrayList<Utente> utenti = new ArrayList<Utente>();
 
 	public RuoloUtente() {
@@ -55,6 +60,25 @@ public class RuoloUtente implements java.io.Serializable {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
+	
+	@Column(name = "user_modify")
+	public Integer getUserModify() {
+		return userModify;
+	}
+
+	public void setUserModify(Integer userModify) {
+		this.userModify = userModify;
+	}
+
+	@Column(name = "last_modify")
+	public Date getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Date lastModify) {
+		this.lastModify = lastModify;
+	}
+
 
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ruoliUtenti")
 //	public ArrayList<Utente> getUtenti() {

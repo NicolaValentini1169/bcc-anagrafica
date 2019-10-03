@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.Date;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,6 +34,8 @@ public class Utente implements java.io.Serializable {
 	private String password;
 	private Boolean statoAttivo;
 	private Boolean cambioPassword;
+	private Integer userModify;
+	private Date lastModify;
 
 	public Utente() {
 	}
@@ -138,6 +143,24 @@ public class Utente implements java.io.Serializable {
 
 	public void setCambioPassword(Boolean cambioPassword) {
 		this.cambioPassword = cambioPassword;
+	}
+
+	@Column(name = "user_modify")
+	public Integer getUserModify() {
+		return userModify;
+	}
+
+	public void setUserModify(Integer userModify) {
+		this.userModify = userModify;
+	}
+
+	@Column(name = "last_modify")
+	public Date getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Date lastModify) {
+		this.lastModify = lastModify;
 	}
 
 }
