@@ -42,14 +42,7 @@ public class BranchSearchController {
 			 filialeList.addAll(filialeRepository.findAll());
 		 } else if(rolesSetString.contains(AuthorityRolesConstants.ROLE_USER)) {
 			 Utente utente = utenteRepository.findByUsername(jwtTokenProvider.getUsernameFromJWT(jwtToken));
-//			 filialeList.add(utente.getFiliali());
-			 /* MOCK, to be leaved */ 
-			 Filiale filiale1 = new Filiale();
-			 filiale1.setId(1);
-			 filiale1.setNome("Filiale di Carugate");
-			 filiale1.setCodice(0);
-			 filiale1.setCab("32760");
-			 filialeList.add(filiale1);
+			 filialeList.add(utente.getFiliali());
 		 }
 		 return new ResponseEntity<>(filialeList, HttpStatus.OK);
 	    }
