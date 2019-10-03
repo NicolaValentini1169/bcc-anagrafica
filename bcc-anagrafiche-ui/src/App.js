@@ -9,6 +9,8 @@ import OperazioneCompletata from './anagrafica_components/OperazioneCompletata';
 import axios from "axios";
 import config from "./config.json";
 import dotenv from "dotenv";
+import Report from './anagrafica_components/Report';
+import Navbar from './anagrafica_components/Navbar';
 
 dotenv.config();
 
@@ -45,6 +47,7 @@ class App extends Component {
     .then(response => {console.log(response)
         roles = [...response.data.roles];
         localStorage.setItem("TOKEN", response.data.accessToken);
+        localStorage.setItem("USERNAME", response.data.username);
         this.setState({roles: roles, username: response.data.username,
            userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
         console.log(roles[0].authority, roles[0])
@@ -104,9 +107,18 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
+  goToReport = () => {
+    this.props.history.push("/report");
+  }
+
+  goToResearch = () => {
+    this.props.history.push("/ricerca-clienti");
+  }
+
   render() { 
     return (
       <div className="App">
+        <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>
          <Switch>
               <Route
                 path="/login"
@@ -134,7 +146,12 @@ class App extends Component {
               <Route
                 path="/ricerca-completata"
                 exact
-                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco}/>}
+                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username}/>}
+              />
+              <Route
+                path="/report"
+                exact
+                render={(props) => <Report  {...props} />}
               />
           </Switch>
       </div>

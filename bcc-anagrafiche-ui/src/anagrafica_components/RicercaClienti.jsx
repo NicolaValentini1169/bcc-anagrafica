@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DatePicker from 'react-date-picker';
 import Select from 'react-select'
 import AnagraficaDaVerificare from './AnagraficaDaVerificare';
-import Navbar from './Navbar';
 import {LABELS} from "./common/Constants";
 import Moment from 'react-moment';
 import moment from 'moment';
@@ -80,7 +79,7 @@ export class RicercaClienti extends Component {
     render() { 
         return ( 
             <div>
-            <Navbar />
+            {/* <Navbar username={this.props.username}/> */}
             <h2 className="text-left ricercaClienti">{LABELS.RICERCA_CLIENTE}</h2>
             <form className="formRicercaClienti">
                 <div className="row">
@@ -138,7 +137,7 @@ export class RicercaClienti extends Component {
             <div className="text-left bottoneRicerca">
                 <h2 className="col-md-2 offset-md-3">{LABELS.ATTENZIONE}</h2>
                 <p className="col-md-3 offset-md-3">{LABELS.ANAGRAFICA_CLIENTE_TEXT}</p>
-                <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA}</p>
+                <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA} {" "} {<Moment format="DD/MM/YYYY">{this.state.cliente.lastModify}</Moment>}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {this.state.cliente.codice}</p>
                 <button type="button" className="btn btn-primary col-md-1 offset-md-3">{LABELS.STAMPA}</button>
                 <button className="btn btn-primary col-md-1 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
