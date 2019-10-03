@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -23,7 +25,7 @@ public class RuoloUtente implements java.io.Serializable {
 
 	private Integer id;
 	private String ruolo;
-	private Integer userModify;
+	private Utente utenti;
 	private Date lastModify;
 	
 //	private ArrayList<Utente> utenti = new ArrayList<Utente>();
@@ -60,14 +62,15 @@ public class RuoloUtente implements java.io.Serializable {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
-	
-	@Column(name = "user_modify")
-	public Integer getUserModify() {
-		return userModify;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_modify", nullable = false)
+	public Utente getUtenti() {
+		return utenti;
 	}
 
-	public void setUserModify(Integer userModify) {
-		this.userModify = userModify;
+	public void setUtenti(Utente utenti) {
+		this.utenti = utenti;
 	}
 
 	@Column(name = "last_modify")
