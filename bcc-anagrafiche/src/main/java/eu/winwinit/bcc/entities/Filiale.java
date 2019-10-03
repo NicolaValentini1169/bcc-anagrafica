@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +27,6 @@ public class Filiale implements java.io.Serializable {
 	private String nome;
 	private Integer codice;
 	private String cab;
-	private Integer userModify;
 	private Date lastModify;
 	private List<Cliente> clienti = new ArrayList<Cliente>();
 	private List<Utente> utenti = new ArrayList<Utente>();
@@ -84,15 +85,6 @@ public class Filiale implements java.io.Serializable {
 
 	public void setCab(String cab) {
 		this.cab = cab;
-	}
-	
-	@Column(name = "user_modify")
-	public Integer getUserModify() {
-		return userModify;
-	}
-
-	public void setUserModify(Integer userModify) {
-		this.userModify = userModify;
 	}
 
 	@Column(name = "last_modify")
