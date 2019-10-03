@@ -9,11 +9,12 @@ import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.repository.FilialeRepository;
 
 @Service("filialeService")
-public class FilialeServiceImpl {
+public class FilialeServiceImpl implements FilialeService{
 
 	@Autowired
 	private FilialeRepository filialeRepository;
 	
+	@Override
 	public List<Filiale> findAll() {
 		return filialeRepository.findAll();
 	}
