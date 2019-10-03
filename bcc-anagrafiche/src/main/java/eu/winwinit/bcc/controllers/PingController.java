@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.security.SecurityConstants;
 
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
+
 @RestController
 @RequestMapping("/api/v1")
 public class PingController {
@@ -18,13 +20,13 @@ public class PingController {
     }
 
     @RequestMapping(value = "/userPing", method = RequestMethod.GET)
-    @Secured({"ROLE_" + SecurityConstants.ROLE_USER, "ROLE_" + SecurityConstants.ROLE_ADMIN})
+    @Secured({AuthorityRolesConstants.ROLE_USER, AuthorityRolesConstants.ROLE_ADMIN})
     public ResponseEntity<String> userPing() {
         return ResponseEntity.ok().body("Ping for users");
     }
 
     @RequestMapping(value = "/adminPing", method = RequestMethod.GET)
-    @Secured({"ROLE_" + SecurityConstants.ROLE_ADMIN})
+    @Secured({AuthorityRolesConstants.ROLE_ADMIN})
     public ResponseEntity<String> adminPing() {
         return ResponseEntity.ok().body("Ping for admins");
     }
