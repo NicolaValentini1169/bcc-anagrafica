@@ -5,6 +5,7 @@ import AnagraficaDaVerificare from './AnagraficaDaVerificare';
 import Navbar from './Navbar';
 import {LABELS} from "./common/Constants";
 import Moment from 'react-moment';
+import moment from 'moment';
 
 export class RicercaClienti extends Component {
     state = { 
@@ -59,7 +60,9 @@ export class RicercaClienti extends Component {
 
     findCliente = () => {
         let ricerca = {...this.state.ricerca}
-
+        
+        ricerca.date = moment(ricerca.date).format("DD/MM/YYYY");
+        
         this.props.handleFindCliente(ricerca);
     }
 
@@ -136,13 +139,13 @@ export class RicercaClienti extends Component {
                 <h2 className="col-md-2 offset-md-3">{LABELS.ATTENZIONE}</h2>
                 <p className="col-md-3 offset-md-3">{LABELS.ANAGRAFICA_CLIENTE_TEXT}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA}</p>
-                <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO}</p>
+                <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {this.state.cliente.codice}</p>
                 <button type="button" className="btn btn-primary col-md-1 offset-md-3">{LABELS.STAMPA}</button>
-                <button className="btn btn-primary col-md-2 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
+                <button className="btn btn-primary col-md-1 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
                 </div>
                 : ""}
 
-            {this.state.isSingleAndNotConfirmed ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista}/> : ""}
+            {this.state.isSingleAndNotConfirmed ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista} cliente={this.state.cliente} handleVerifyRegistry={this.props.handleVerifyRegistry}/> : ""}
             </div>
          );
     }

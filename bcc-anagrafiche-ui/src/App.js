@@ -18,7 +18,8 @@ class App extends Component {
     username: "",
     roles: [],
     filiali: [],
-    clienti: []
+    clienti: [],
+    codiceUnivoco: null
    }
 
    componentWillMount() {
@@ -89,6 +90,20 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
+  handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
+    const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+    console.log(markAsEditedRequest)
+    axios.post(config.apiVerifyAnagraficaEndpoint, markAsEditedRequest, conf)
+    .then(response => {
+      if(response.data === "OK"){
+        this.setState({codiceUnivoco: codiceUnivoco, clienti: []});
+        this.props.history.push("/ricerca-completata");
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
   render() { 
     return (
       <div className="App">
@@ -109,7 +124,7 @@ class App extends Component {
                 render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
                                                   username={this.state.username} userType={this.state.userType}
                                                   filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
-                                                  clienti={this.state.clienti}/>}
+                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}/>}
               />
                <Route
                 path="/importa-clienti"
@@ -119,7 +134,7 @@ class App extends Component {
               <Route
                 path="/ricerca-completata"
                 exact
-                render={(props) => <OperazioneCompletata  {...props}/>}
+                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco}/>}
               />
           </Switch>
       </div>

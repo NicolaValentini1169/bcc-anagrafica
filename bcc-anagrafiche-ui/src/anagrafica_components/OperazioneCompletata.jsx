@@ -17,7 +17,7 @@ class OperazioneCompletata extends Component {
         <div className="row">
             <h3 className="col-md-12">{LABELS.OPERAZIONE_COMPLETATA}</h3>
             <p  className="col-md-12">{LABELS.CODICE_ASSEGNATO}</p>
-            <p  className="col-md-12 mb-5">XXXXXXX</p>
+            <p  className="col-md-12 mb-5">{this.props.codiceUnivoco ? this.props.codiceUnivoco : ""}</p>
             <button className="col-md-3 offset-md-2 btn btn-success" onClick={() => this.backToResearch()}>{LABELS.NUOVA_RICERCA}</button>
             <button className="col-md-3 offset-md-2 btn btn-primary">{LABELS.STAMPA}</button>
             

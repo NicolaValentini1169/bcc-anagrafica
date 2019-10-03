@@ -12,7 +12,7 @@ export const LABELS={
     ATTENZIONE: "ATTENZIONE",
     ANAGRAFICA_CLIENTE_TEXT: "L'anagrafica del cliente è già stata verificata in",
     DATA_INSERITA: "data INSERIRE DATA",
-    CODICE_UNIVOCO: "Il codice univoco assegnato è CODICE",
+    CODICE_UNIVOCO: "Il codice univoco assegnato è ",
     STAMPA: "STAMPA",
     CERCA: "CERCA",
     LOGOUT: "LOGOUT",
