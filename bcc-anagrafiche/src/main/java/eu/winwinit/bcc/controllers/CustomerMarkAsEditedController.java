@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.VariazioneCliente;
 import eu.winwinit.bcc.model.MarkAsEditedRequest;
 import eu.winwinit.bcc.security.JwtTokenProvider;
-import eu.winwinit.bcc.security.SecurityConstants;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,7 +28,7 @@ public class CustomerMarkAsEditedController {
 	
 	@RequestMapping(value = "/customer-mark-as-edited", method = RequestMethod.POST)
     public ResponseEntity<String> customerMarkAsEdited(
-    		@RequestHeader(value=SecurityConstants.HEADER_STRING) String jwtToken,
+    		@RequestHeader(value=AuthorityRolesConstants.HEADER_STRING) String jwtToken,
     		@RequestBody MarkAsEditedRequest markAsEditedRequest) {
 	 
 	 Set<GrantedAuthority> rolesSet = jwtTokenProvider.getRolesFromJWT(jwtToken);
