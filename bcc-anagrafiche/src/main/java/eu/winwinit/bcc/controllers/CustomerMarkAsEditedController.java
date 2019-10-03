@@ -52,7 +52,7 @@ public class CustomerMarkAsEditedController {
 		 Boolean value = entrySet.getValue();
 		 if(value.booleanValue() == true) {
 			 VariazioneCliente variazioneCliente = new VariazioneCliente();
-			 //variazioneCliente.setUtenti(utente);
+			 variazioneCliente.setUtenti(utente);
 			 variazioneCliente.setClienti(cliente);
 			 variazioneCliente.setCampo(key);
 			 variazioneClienteRepository.save(variazioneCliente);
