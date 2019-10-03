@@ -38,16 +38,20 @@ public class CustomerSearchController {
     	
     	log.debug("customerSearch() START");
 
-        //ArrayList<Cliente> listaCliente = mockListaCliente();
+        List<Cliente> listaCliente = mockListaClienti();
+        //List<Cliente> listaCliente = getListaClienti();
     	
-    	Cliente cliente = new Cliente();
-    			cliente.setNome("MA");
-    	List<Cliente> listaCliente = clienteService.findByNome(cliente.getNome());
         
     	return ResponseEntity.ok(listaCliente);
     }
 
-	private ArrayList<Cliente> mockListaCliente() {
+	private List<Cliente> getListaClienti() {
+    	Cliente cliente = new Cliente();
+		cliente.setNome("MA");
+		return clienteService.findByNome(cliente.getNome());
+	}
+
+	private ArrayList<Cliente> mockListaClienti() {
 		ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
 		final int MOCK_LIST_SIZE = 12;
 		
@@ -77,6 +81,9 @@ public class CustomerSearchController {
 //	                null
 					);
 			cliente.setId(i);
+			cliente.setUserModify(1);
+			cliente.setLastModify(new Date(9, 8, 3));
+			
 			listaCliente.add(cliente);
 		}
 		return listaCliente;
