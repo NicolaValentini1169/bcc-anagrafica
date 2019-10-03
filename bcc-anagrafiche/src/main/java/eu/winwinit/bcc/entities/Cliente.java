@@ -1,20 +1,17 @@
 package eu.winwinit.bcc.entities;
 // Generated 2-ott-2019 9.39.22 by Hibernate Tools 4.3.5.Final
 
-import java.util.ArrayList;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +24,10 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "clienti", uniqueConstraints = @UniqueConstraint(columnNames = "nag"))
 public class Cliente implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Filiale filiali;
 	private String nag;
