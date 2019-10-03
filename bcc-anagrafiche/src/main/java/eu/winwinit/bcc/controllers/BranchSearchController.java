@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.entities.Utente;
-import eu.winwinit.bcc.repository.FilialeRepository;
-import eu.winwinit.bcc.repository.UtenteRepository;
 import eu.winwinit.bcc.security.JwtTokenProvider;
+import eu.winwinit.bcc.service.FilialeService;
+import eu.winwinit.bcc.service.UtenteService;
 import eu.winwinit.bcc.util.UtilClass;
 
 @RestController
@@ -28,10 +28,10 @@ public class BranchSearchController {
 	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 	
 	@Autowired
-	FilialeRepository filialeRepository;
+	FilialeService filialeService;
 	
 	@Autowired
-	UtenteRepository utenteRepository;
+	UtenteService utenteService;
 	
 	 @RequestMapping(value = "/branch-search", method = RequestMethod.GET)
 	    public ResponseEntity<List<Filiale>> branchSearch(
@@ -39,9 +39,9 @@ public class BranchSearchController {
 		 Set<String> rolesSetString = UtilClass.fromGrantedAuthorityToStringSet(jwtTokenProvider.getRolesFromJWT(jwtToken));
 		 List<Filiale> filialeList = new ArrayList<Filiale>();
 		 if(rolesSetString.contains(AuthorityRolesConstants.ROLE_ADMIN)) {
-			 filialeList.addAll(filialeRepository.findAll());
+			 filialeList.addAll(filialeService.findAll());
 		 } else if(rolesSetString.contains(AuthorityRolesConstants.ROLE_USER)) {
-			 Utente utente = utenteRepository.findByUsername(jwtTokenProvider.getUsernameFromJWT(jwtToken));
+			 Utente utente = utenteService.findByUsername(jwtTokenProvider.getUsernameFromJWT(jwtToken));
 			 filialeList.add(utente.getFiliali());
 		 }
 		 return new ResponseEntity<>(filialeList, HttpStatus.OK);
