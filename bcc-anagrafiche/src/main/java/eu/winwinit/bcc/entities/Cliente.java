@@ -46,7 +46,7 @@ public class Cliente implements java.io.Serializable {
 	private Boolean firma;
 	private String codice;
 	private Boolean confermato;
-	private Integer userModify;
+	private Utente utenti;
 	private Date lastModify;
 	
 //	private List<VariazioneCliente> variazioniClienti = new ArrayList<VariazioneCliente>();
@@ -254,14 +254,19 @@ public class Cliente implements java.io.Serializable {
 	public void setConfermato(Boolean confermato) {
 		this.confermato = confermato;
 	}
-	
-	@Column(name = "user_modify")
-	public Integer getUserModify() {
-		return userModify;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_modify", nullable = false)
+	public Utente getUtenti() {
+		return utenti;
 	}
 
-	public void setUserModify(Integer userModify) {
-		this.userModify = userModify;
+	public void setUtenti(Utente utenti) {
+		this.utenti = utenti;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Column(name = "last_modify")

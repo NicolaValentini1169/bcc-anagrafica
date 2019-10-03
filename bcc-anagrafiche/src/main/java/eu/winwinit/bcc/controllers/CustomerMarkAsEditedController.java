@@ -17,10 +17,10 @@ import eu.winwinit.bcc.entities.Cliente;
 import eu.winwinit.bcc.entities.Utente;
 import eu.winwinit.bcc.entities.VariazioneCliente;
 import eu.winwinit.bcc.model.MarkAsEditedRequest;
-import eu.winwinit.bcc.repository.ClienteRepository;
-import eu.winwinit.bcc.repository.UtenteRepository;
 import eu.winwinit.bcc.repository.VariazioneClienteRepository;
 import eu.winwinit.bcc.security.JwtTokenProvider;
+import eu.winwinit.bcc.service.ClienteService;
+import eu.winwinit.bcc.service.UtenteService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,10 +30,10 @@ public class CustomerMarkAsEditedController {
 	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
 	
 	@Autowired
-	ClienteRepository clienteRepository;
+	ClienteService clienteService;
 	
 	@Autowired
-	UtenteRepository utenteRepository;
+	UtenteService utenteService;
 	
 	@Autowired
 	VariazioneClienteRepository variazioneClienteRepository;
@@ -43,8 +43,8 @@ public class CustomerMarkAsEditedController {
     		@RequestHeader(value=AuthorityRolesConstants.HEADER_STRING) String jwtToken,
     		@RequestBody MarkAsEditedRequest markAsEditedRequest) {
 	 
-	 Utente utente = utenteRepository.findByUsername(jwtTokenProvider.getUsernameFromJWT(jwtToken));
-	 Cliente cliente = clienteRepository.findById(markAsEditedRequest.getId()).get();
+	 Utente utente = utenteService.findByUsername(jwtTokenProvider.getUsernameFromJWT(jwtToken));
+	 Cliente cliente = clienteService.findById(markAsEditedRequest.getId()).get();
 	 HashMap<String, Boolean> editedHashMap = markAsEditedRequest.fieldsToHashMap(markAsEditedRequest);
 	 
 	 for(Map.Entry<String, Boolean> entrySet : editedHashMap.entrySet()) {
@@ -52,12 +52,12 @@ public class CustomerMarkAsEditedController {
 		 Boolean value = entrySet.getValue();
 		 if(value.booleanValue() == true) {
 			 VariazioneCliente variazioneCliente = new VariazioneCliente();
-			 //variazioneCliente.setUtenti(utente);
+			 variazioneCliente.setUtenti(utente);
 			 variazioneCliente.setClienti(cliente);
 			 variazioneCliente.setCampo(key);
 			 variazioneClienteRepository.save(variazioneCliente);
 			 cliente.setConfermato(true);
-			 clienteRepository.save(cliente);
+			 clienteService.save(cliente);
 		 }
 	 }
 	 return new ResponseEntity<>(HttpStatus.OK.getReasonPhrase(),HttpStatus.OK);

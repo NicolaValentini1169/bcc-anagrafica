@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.entities.Cliente;
+import eu.winwinit.bcc.entities.Utente;
+import eu.winwinit.bcc.model.CustomerSearchRequest;
 import eu.winwinit.bcc.service.ClienteService;
 
 @RestController
@@ -29,25 +31,23 @@ public class CustomerSearchController {
     private Logger log = LoggerFactory.getLogger(CustomerSearchController.class);
 
     @RequestMapping(value = "customer-search", method = RequestMethod.GET)
-    public ResponseEntity<List<Cliente>> customerSearch(
-    		@RequestParam(value="idFiliale", required=false) Integer idFiliale,
-    		@RequestParam(value="nag", required=false) String nag,
-    		@RequestParam(value="nome", required=false) String nome,
-    		@RequestParam(value="dataNascita", required=false) Date dataNascita
-    ) throws NamingException, SQLException {
-    	
+    public ResponseEntity<List<Cliente>> customerSearch(CustomerSearchRequest customerSearchRequest) throws NamingException, SQLException {
+    
     	log.debug("customerSearch() START");
 
-        //ArrayList<Cliente> listaCliente = mockListaCliente();
-    	
-    	Cliente cliente = new Cliente();
-    			cliente.setNome("MA");
-    	List<Cliente> listaCliente = clienteService.findByNome(cliente.getNome());
-        
+        List<Cliente> listaCliente = mockListaClienti();
+        //List<Cliente> listaCliente = getListaClienti();
+    	        
     	return ResponseEntity.ok(listaCliente);
     }
 
-	private ArrayList<Cliente> mockListaCliente() {
+	private List<Cliente> getListaClienti() {
+    	Cliente cliente = new Cliente();
+		cliente.setNome("MA");
+		return clienteService.findByNome(cliente.getNome());
+	}
+
+	private ArrayList<Cliente> mockListaClienti() {
 		ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
 		final int MOCK_LIST_SIZE = 12;
 		
@@ -77,6 +77,11 @@ public class CustomerSearchController {
 //	                null
 					);
 			cliente.setId(i);
+			Utente utente = new Utente();
+			utente.setId(1);
+			cliente.setUtenti(utente);
+			cliente.setLastModify(new Date(9, 8, 3));
+			
 			listaCliente.add(cliente);
 		}
 		return listaCliente;

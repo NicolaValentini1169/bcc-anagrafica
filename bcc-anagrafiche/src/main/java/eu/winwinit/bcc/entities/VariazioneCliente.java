@@ -24,7 +24,7 @@ public class VariazioneCliente implements java.io.Serializable {
 	private Integer id;
 	private Cliente clienti;
 	private String campo;
-	private Integer userModify;
+	private Utente utenti;
 	private Date lastModify;
 
 	public VariazioneCliente() {
@@ -66,13 +66,14 @@ public class VariazioneCliente implements java.io.Serializable {
 		this.campo = campo;
 	}
 	
-	@Column(name = "user_modify")
-	public Integer getUserModify() {
-		return userModify;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_modify", nullable = false)
+	public Utente getUtenti() {
+		return utenti;
 	}
 
-	public void setUserModify(Integer userModify) {
-		this.userModify = userModify;
+	public void setUtenti(Utente utenti) {
+		this.utenti = utenti;
 	}
 
 	@Column(name = "last_modify")
