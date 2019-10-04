@@ -125,6 +125,24 @@ class App extends Component {
     this.props.history.push("/ricerca-clienti");
   }
 
+  downloadFile = () => {
+    const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+
+    axios
+      .get(config.apiDownloadEndpoint, conf)
+      .then(({ data: downloadedFile }) => {
+        let byteArray = new Uint8Array(downloadedFile.file);
+        const url = window.URL.createObjectURL(new Blob([byteArray]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", downloadedFile.name);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(error => console.log(error));
+  };
+
   render() { 
     return (
       <div className="App">
@@ -146,7 +164,8 @@ class App extends Component {
                 render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
                                                   username={this.state.username} userType={this.state.userType}
                                                   filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
-                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}/>}
+                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
+                                                  downloadFile={this.downloadFile}/>}
               />
                <Route
                 path="/importa-clienti"
@@ -156,7 +175,7 @@ class App extends Component {
               <Route
                 path="/ricerca-completata"
                 exact
-                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username}/>}
+                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username} downloadFile={this.downloadFile}/>}
               />
               <Route
                 path="/report"
