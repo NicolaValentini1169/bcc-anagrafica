@@ -1,10 +1,7 @@
 package eu.winwinit.bcc.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.Cliente;
-import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.repository.FilialeRepository;
 import eu.winwinit.bcc.service.ClienteService;
 
