@@ -1,5 +1,7 @@
 package eu.winwinit.bcc.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,8 +44,16 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate) {
-		return clienteRepository.findByBranchAndNagAndCustomerDateAndBirthDate(branch, nag, customerName, birthDate);
+	public List<Cliente> findByBranchAndNagAndCustomerNameAndBirthDate(Integer branch, String nag, String customerName, String birthDate) {
+
+		if(branch != null && nag != null && customerName != null && birthDate != null)
+			return clienteRepository.findByBranchAndNagAndCustomerNameAndBirthDate(branch, nag, customerName, birthDate);
+		else if(branch != null && nag != null && customerName != null)
+			return clienteRepository.findByBranchAndNagAndCustomerName(branch, nag, customerName);
+		else if(branch != null && nag != null)
+			return clienteRepository.findByBranchAndNag(branch, nag);
+		else
+			return Arrays.asList(clienteRepository.findByNag(nag));
 	}
 
 }
