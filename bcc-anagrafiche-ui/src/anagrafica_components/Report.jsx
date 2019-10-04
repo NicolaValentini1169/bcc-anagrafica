@@ -17,40 +17,39 @@ class Report extends Component {
         this.setState({statsTotali: props.statsTotali})
     }
 
-
     render() {
-        return ( 
+        return (
             <div>
                 <h2 className="ricercaClienti text-left">Statistiche</h2>
                 <fieldset className="commondFieldset text-left">
-                Anagrafiche confermate: {this.state.statsTotali.totConfirmedRecords}
+					Anagrafiche confermate: <span className="font-weight-bold">{this.state.statsTotali.totConfirmedRecords}</span>
                     <br />
-                    Anagrafiche con modifica: TDB
+                    Anagrafiche con modifica: <span className="font-weight-bold">TDB</span>
                     <br />
-                    Anagrafiche non ancora confermate: {this.state.statsTotali.totNotConfirmedRecords}
+                    Anagrafiche non ancora confermate: <span className="font-weight-bold">{this.state.statsTotali.totNotConfirmedRecords}</span>
                     <br />
-                    Totale clienti caricati: {this.state.statsTotali.totCustomers}
+                    Totale clienti caricati: <span className="font-weight-bold">{this.state.statsTotali.totCustomers}</span>
                 </fieldset>
 
-                <div className="commondFieldsetLabel text-left font-weight-bold">Dettaglio campi modificati</div>
+                <div className="commondFieldsetLabel font-weight-bold text-left">Dettaglio campi modificati</div>
                 <fieldset className="commondFieldset text-left">
-                    Modifica numero di telefono: {this.state.statsTotali.totEditedPhone}
+                    Modifica numero di telefono: <span className="font-weight-bold">{this.state.statsTotali.totEditedPhone}</span>
                     <br />
-                    Modifica email: {this.state.statsTotali.totEditedEmail}
+                    Modifica email: <span className="font-weight-bold">{this.state.statsTotali.totEditedEmail}</span>
                     <br />
                     Modifica Privacy
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 1: {this.state.statsTotali.totEditedPrivacy1}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 1: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy1}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 2: {this.state.statsTotali.totEditedPrivacy2}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 2: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy2}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 3: {this.state.statsTotali.totEditedPrivacy3}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 3: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy3}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 4: {this.state.statsTotali.totEditedPrivacy4}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 4: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy4}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 5: {this.state.statsTotali.totEditedPrivacy5}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 5: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy5}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 6: {this.state.statsTotali.totEditedPrivacy6}
+                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 6: <span className="font-weight-bold">{this.state.statsTotali.totEditedPrivacy6}</span>
                 </fieldset>
             </div>
         );
