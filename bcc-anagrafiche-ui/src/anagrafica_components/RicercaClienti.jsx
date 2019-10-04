@@ -18,7 +18,8 @@ export class RicercaClienti extends Component {
         },
         clienti: [],
         showListaClienti: false,
-        cliente: {}
+        cliente: {},
+        nagError: false
     }
 
     componentWillMount() {
@@ -61,8 +62,12 @@ export class RicercaClienti extends Component {
         let ricerca = {...this.state.ricerca}
         
         ricerca.date = moment(ricerca.date).format("MM/DD/YYYY");
-        
-        this.props.handleFindCliente(ricerca);
+        if(ricerca.nag.length >= 3){
+            this.setState({nagError: false});
+            this.props.handleFindCliente(ricerca);
+        } else {
+            this.setState({nagError: true});
+        }
     }
 
     getCliente = (cliente) => {
@@ -81,7 +86,7 @@ export class RicercaClienti extends Component {
             <div>
             {/* <Navbar username={this.props.username}/> */}
             <h2 className="text-left ricercaClienti">{LABELS.RICERCA_CLIENTE}</h2>
-            <form className="formRicercaClienti">
+            <form className={!this.state.nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
                 <div className="row">
                     <label className="col-1 labelForm">{LABELS.FILIALE}</label>
                     <Select className="col-md-2" placeholder="Seleziona Filiale" options={
@@ -95,7 +100,7 @@ export class RicercaClienti extends Component {
                     onChange={filiale => this.onChangeFiliale(filiale)}/>
                     
                     <label className="col-1 labelForm">{LABELS.NAG}</label>
-                    <input className="col-md-2 form-control" placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nag}/>
+                    <input className={`col-md-2 form-control ${this.state.nagError ? "errorInput" : ""}`} placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nag}/>
                     <label className="col-1 labelForm">{LABELS.NOME}</label>
                     <input className="col-md-2 form-control" placeholder="NOME CLIENTE" name="nome" onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nome}/>
                     <label className="col-md-1 labelForm">{LABELS.DATA_DI_NASCITA}</label>
@@ -105,7 +110,9 @@ export class RicercaClienti extends Component {
                         value={this.state.ricerca.date}
                     />
                 </div>
-            <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>
+                {this.state.nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> <div > <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div></React.Fragment>
+                : <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>}
+            
             </form>
 
             {this.state.clienti.length !== 0 && this.state.showListaClienti ?

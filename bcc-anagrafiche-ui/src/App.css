@@ -111,6 +111,15 @@ body, html {
   border-radius: 3px;
 }
 
+.formRicercaClientiError {
+  border: 1px black solid;
+  height: 180px;
+  padding-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 3px;
+}
+
 .labelForm{
   margin-top: 8px;
 }
@@ -143,4 +152,8 @@ body, html {
 
 .bottoneDettaglio {
   border-bottom: 1px black solid;
+}
+
+.errorInput {
+  border: 1px red solid;
 }
