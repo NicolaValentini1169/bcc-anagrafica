@@ -26,7 +26,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	@Query(value = "select c "
 				 + "FROM Cliente c "
 				 + "WHERE filiale = :branch "
-				 + "AND nag LIkE :nag% "
+				 + "AND nag LIKE :nag% "
 				 + "AND nome = :customerName "
 				 + "AND data_nascita = :birthDate")
 	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(	@Param("branch")Integer branch,
