@@ -13,6 +13,7 @@ public class StatisticsResponse {
 	long totEditedPrivacy4=0;
 	long totEditedPrivacy5=0;
 	long totEditedPrivacy6=0;
+	long totEditedFirma=0;
 	
 	
 	public StatisticsResponse() {
@@ -22,7 +23,7 @@ public class StatisticsResponse {
 	public StatisticsResponse(long totCustomers, long totConfirmedRecords, long totChangedRecords,
 			long totNotConfirmedRecords, long totEditedPhone, long totEditedEmail, long totEditedPrivacy1,
 			long totEditedPrivacy2, long totEditedPrivacy3, long totEditedPrivacy4, long totEditedPrivacy5,
-			long totEditedPrivacy6) {
+			long totEditedPrivacy6, long totEditedFirma) {
 		super();
 		this.totCustomers = totCustomers;
 		this.totConfirmedRecords = totConfirmedRecords;
@@ -36,6 +37,7 @@ public class StatisticsResponse {
 		this.totEditedPrivacy4 = totEditedPrivacy4;
 		this.totEditedPrivacy5 = totEditedPrivacy5;
 		this.totEditedPrivacy6 = totEditedPrivacy6;
+		this.totEditedFirma = totEditedFirma;
 	}
 
 	public long getTotCustomers() {
@@ -110,5 +112,10 @@ public class StatisticsResponse {
 	public void setTotEditedPrivacy6(long totEditedPrivacy6) {
 		this.totEditedPrivacy6 = totEditedPrivacy6;
 	}
-	
+	public long getTotEditedFirma() {
+		return totEditedFirma;
+	}
+	public void setTotEditedFirma(long totEditedFirma) {
+		this.totEditedFirma = totEditedFirma;
+	}
 }
