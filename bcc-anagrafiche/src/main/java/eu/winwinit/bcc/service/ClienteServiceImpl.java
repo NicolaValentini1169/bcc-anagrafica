@@ -40,5 +40,15 @@ public class ClienteServiceImpl implements ClienteService{
 	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate) {
 		return clienteRepository.findByDateAndConfermato(startDate, endDate);
 	}
+
+	@Override
+	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate) {
+		return clienteRepository.findByBranchAndNagAndCustomerDateAndBirthDate(branch, nag, customerName, birthDate);
+	}
+
+	@Override
+	public List<Cliente> findByDataNascita(Date dataNascita) {
+		return clienteRepository.findByDataNascita(dataNascita);
+	}
 	
 }

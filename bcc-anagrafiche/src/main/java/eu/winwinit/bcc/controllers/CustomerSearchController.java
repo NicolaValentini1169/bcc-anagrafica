@@ -1,24 +1,20 @@
 package eu.winwinit.bcc.controllers;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.naming.NamingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.Cliente;
-import eu.winwinit.bcc.entities.Utente;
-import eu.winwinit.bcc.model.CustomerSearchRequest;
 import eu.winwinit.bcc.service.ClienteService;
 
 @RestController
@@ -27,63 +23,28 @@ public class CustomerSearchController {
 	
 	@Autowired
 	ClienteService clienteService;
-	
-    private Logger log = LoggerFactory.getLogger(CustomerSearchController.class);
 
     @RequestMapping(value = "customer-search", method = RequestMethod.GET)
-    public ResponseEntity<List<Cliente>> customerSearch(CustomerSearchRequest customerSearchRequest) throws NamingException, SQLException {
-    
-    	log.debug("customerSearch() START");
-
-        List<Cliente> listaCliente = mockListaClienti();
-        //List<Cliente> listaCliente = getListaClienti();
-    	        
-    	return ResponseEntity.ok(listaCliente);
+    public ResponseEntity<List<Cliente>> customerSearch(
+    		@RequestHeader(value=AuthorityRolesConstants.HEADER_STRING) String jwtToken,
+    		@RequestParam(value="branch") Integer filiale,
+    		@RequestParam(value="nag") String nag,
+    		@RequestParam(value="customerName") String customerName,
+    		@RequestParam(value="birthDate") Date birthDate
+    		) {
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+    	System.out.println("================== DATA" + sdf.format(birthDate));
+    	
+    	List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerDateAndBirthDate(filiale, nag, customerName, birthDate);
+    	
+    	List<Cliente> clientiData = clienteService.findByDataNascita(birthDate);
+    	
+//    	System.out.println("ciaociao");
+    	
+    	return ResponseEntity.ok(null);
     }
 
-	private List<Cliente> getListaClienti() {
-    	Cliente cliente = new Cliente();
-		cliente.setNome("MA");
-		return clienteService.findByNome(cliente.getNome());
-	}
 
-	private ArrayList<Cliente> mockListaClienti() {
-		ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
-		final int MOCK_LIST_SIZE = 12;
-		
-		for (int i=0; i<MOCK_LIST_SIZE; i++) {
-			boolean flagConfermato = true;
-			if (i>5) {
-				flagConfermato=false;
-			}
-			Cliente cliente = new Cliente(
-					null, 
-					"nag"+i, 
-					"cab"+i, 
-					"nome"+i, 
-					new Date(84, 9, 3),
-					"333"+i, 
-					"nome"+i+"@gmail.com",
-	                true,
-	                false,
-	                true,
-	                false,
-	                true,
-	                false,
-	                true,
-	                false,
-	                "codice"+i,
-	                flagConfermato
-//	                null
-					);
-			cliente.setId(i);
-			Utente utente = new Utente();
-			utente.setId(1);
-			cliente.setUtenti(utente);
-			cliente.setLastModify(new Date(9, 8, 3));
-			
-			listaCliente.add(cliente);
-		}
-		return listaCliente;
-	}
+	
 }

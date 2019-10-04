@@ -36,7 +36,7 @@ public class UtilClass {
 		customerConfirmedListResponse.setNag(cliente.getNag());
 		customerConfirmedListResponse.setData(cliente.getLastModify());
 //		customerConfirmedListResponse.setFiliale((filialeRepository.findById(cliente.getFiliali().getId())).get().getNome());
-		customerConfirmedListResponse.setEditedFieldsSummary(editedFieldsSummaryCalculator(customerConfirmedListResponse));
+//		customerConfirmedListResponse.setEditedFieldsSummary(editedFieldsSummaryCalculator(customerConfirmedListResponse));
 		return customerConfirmedListResponse;
 	}
 	

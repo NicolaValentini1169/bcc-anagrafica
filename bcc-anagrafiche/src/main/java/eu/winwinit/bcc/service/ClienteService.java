@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import eu.winwinit.bcc.entities.Cliente;
 
-public interface ClienteService{
+public interface ClienteService {
 	
 	public Cliente findByNag(String nag);
 
@@ -17,4 +17,8 @@ public interface ClienteService{
 	public void save(Cliente cliente);
 	
 	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate);
+	
+	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate);
+
+	public List<Cliente> findByDataNascita(Date dataNascita);
 }
