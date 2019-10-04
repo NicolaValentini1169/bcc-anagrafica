@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.constants.AuthorityRolesConstants;
 import eu.winwinit.bcc.entities.Cliente;
+import eu.winwinit.bcc.repository.FilialeRepository;
 import eu.winwinit.bcc.service.ClienteService;
 
 @RestController
@@ -23,6 +24,9 @@ public class CustomerSearchController {
 	@Autowired
 	ClienteService clienteService;
 
+	@Autowired
+	FilialeRepository filialeRepository;
+	
     @RequestMapping(value = "customer-search", method = RequestMethod.GET)
     public ResponseEntity<List<Cliente>> customerSearch(
     		@RequestHeader(value=AuthorityRolesConstants.HEADER_STRING) String jwtToken,
