@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import eu.winwinit.bcc.entities.Cliente;
 import eu.winwinit.bcc.entities.VariazioneCliente;
 import eu.winwinit.bcc.utility.VariazioneGroupedInfo;
 
@@ -20,4 +21,7 @@ public interface VariazioneClienteRepository extends JpaRepository<VariazioneCli
 			+ "FROM VariazioneCliente v "
 			+ "group by v.campo")
 	public List<VariazioneGroupedInfo> retrieveVariazioniStatistics(@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
+	public List<VariazioneCliente> findAllByClienti(Cliente cliente);
+	
 }

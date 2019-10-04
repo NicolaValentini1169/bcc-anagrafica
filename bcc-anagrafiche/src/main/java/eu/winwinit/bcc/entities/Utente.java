@@ -34,7 +34,6 @@ public class Utente implements java.io.Serializable {
 	private String password;
 	private Boolean statoAttivo;
 	private Boolean cambioPassword;
-	private Utente utenti;
 	private Date lastModify;
 
 	public Utente() {
@@ -143,16 +142,6 @@ public class Utente implements java.io.Serializable {
 
 	public void setCambioPassword(Boolean cambioPassword) {
 		this.cambioPassword = cambioPassword;
-	}
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_modify", nullable = false)
-	public Utente getUtenti() {
-		return utenti;
-	}
-
-	public void setUtenti(Utente utenti) {
-		this.utenti = utenti;
 	}
 
 	@Column(name = "last_modify")
