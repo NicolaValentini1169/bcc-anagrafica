@@ -11,7 +11,7 @@ class Navbar extends Component {
         <span className="navbar-brand mb-0 h1 col-md-2 text-left">{this.props.username ? this.props.username : localStorage.getItem("USERNAME")}</span>
         <button className="btn btn-link col-md-1" onClick={() => this.props.goToResearch()}>Ricerca Cliente</button>
         <button className="btn btn-link col-md-1 ml-2" onClick={() => this.props.goToReport()}>Report</button>
-        <button className="btn btn-danger col-md-1 offset-md-6">{LABELS.LOGOUT}</button>
+        {/* <button className="btn btn-danger col-md-1 offset-md-6">{LABELS.LOGOUT}</button> */}
         </div>
     </nav> );
     }

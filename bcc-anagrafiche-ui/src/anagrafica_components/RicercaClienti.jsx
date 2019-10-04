@@ -61,7 +61,7 @@ export class RicercaClienti extends Component {
     findCliente = () => {
         let ricerca = {...this.state.ricerca}
         
-        ricerca.date = moment(ricerca.date).format("MM/DD/YYYY");
+        if(ricerca.date !== null){ricerca.date = moment(ricerca.date).format("MM/DD/YYYY")}
         if(ricerca.nag.length >= 3){
             this.setState({nagError: false});
             this.props.handleFindCliente(ricerca);
