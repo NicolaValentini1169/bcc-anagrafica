@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import eu.winwinit.bcc.entities.Cliente;
-import eu.winwinit.bcc.entities.Filiale;
 
 @Repository("clienteRepository")
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
@@ -28,11 +27,33 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 				 + "FROM Cliente c "
 				 + "WHERE filiale = :branch "
 				 + "AND nag LIKE :nag% "
-				 + "AND nome = :customerName "
-				 + "AND data_nascita = :birthDate")
-	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(	@Param("branch")Integer branch,
-																		@Param("nag")String nag,
-																		@Param("customerName")String customerName,
-																		@Param("birthDate")Date birthDate );
+				 + "AND nome LIKE :customerName% "
+				 + "AND DATE_FORMAT(data_nascita,'%Y%m%d') = :birthDate")
+	public List<Cliente> findByBranchAndNagAndCustomerNameAndBirthDate(	@Param("branch") Integer branch,
+																		@Param("nag") String nag,
+																		@Param("customerName") String customerName,
+																		@Param("birthDate") String birthDate );
+	 
+	@Query(value = "select c "
+			 + "FROM Cliente c "
+			 + "WHERE filiale = :branch "
+			 + "AND nag LIKE :nag% "
+			 + "AND nome LIKE :customerName% ")
+	public List<Cliente> findByBranchAndNagAndCustomerName(	@Param("branch")Integer branch,
+																	@Param("nag")String nag,
+																	@Param("customerName")String customerName);
 	
+	
+	@Query(value = "select c "
+			 + "FROM Cliente c "
+			 + "WHERE filiale = :branch "
+			 + "AND nag LIKE :nag% ")
+	public List<Cliente> findByBranchAndNag(@Param("branch")Integer branch,
+											@Param("nag")String nag);
+	
+	
+	@Query(value = "select c "
+			 + "FROM Cliente c "
+			 + "WHERE nag LIKE :nag% ")
+	public List<Cliente> findByNagLike(String nag);
 }

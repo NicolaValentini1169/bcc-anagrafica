@@ -25,7 +25,7 @@ class App extends Component {
    }
 
    componentWillMount() {
-     if(this.props.location === "" || this.props.location === "/")
+     if(this.props.location === "" || this.props.location === "")
     this.props.history.push("/login");
 
     for (let api in config) {
@@ -81,9 +81,26 @@ class App extends Component {
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
     console.log(values.date)
-    axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
-    .then(response => this.setState({clienti: response.data}))
-    .catch(err => console.log(err.response))
+    if(values.nome !== "" && values.date !== null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome === "" && values.date !== null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&birthDate=" + values.date , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome !== "" && values.date === null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome === "" && values.date === null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag, conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
   }
 
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
