@@ -80,17 +80,10 @@ class App extends Component {
     
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
-    let params = {};
-    if(values.nome !== "" && values.date !== null)
-    params = {params: {"idFiliale": values.filiale, "nag": values.nag, "nome": values.nome, "dataNascita": values.date}}
-    else if(values.nome !== "" && values.date === null)
-    params = {params: {"idFiliale": values.filiale, "nag": values.nag, "nome": values.nome}}
-    else if(values.nome === "" && values.date === null)
-    params = {params: {"idFiliale": values.filiale, "nag": values.nag}}
-
-    axios.get(config.apiClienteEndpoint, conf)
+    console.log(values.date)
+    axios.get(config.apiClienteEndpoint + "?idFiliale=" + values.filiale + "&nag=" + values.nag + "&nome=" + values.nome + "&dataNascita=" + values.date , conf)
     .then(response => this.setState({clienti: response.data}))
-    .catch(err => console.log(err))
+    .catch(err => console.log(err.response))
   }
 
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
@@ -116,9 +109,10 @@ class App extends Component {
   }
 
   render() { 
+    console.log(this.props.location.pathname);
     return (
       <div className="App">
-        <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>
+        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" || this.props.location.pathname === "" ? "" : <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>}
          <Switch>
               <Route
                 path="/login"

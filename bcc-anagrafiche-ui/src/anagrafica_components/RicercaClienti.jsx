@@ -60,7 +60,7 @@ export class RicercaClienti extends Component {
     findCliente = () => {
         let ricerca = {...this.state.ricerca}
         
-        ricerca.date = moment(ricerca.date).format("DD/MM/YYYY");
+        ricerca.date = moment(ricerca.date).format("MM/DD/YYYY");
         
         this.props.handleFindCliente(ricerca);
     }
@@ -87,7 +87,7 @@ export class RicercaClienti extends Component {
                     <Select className="col-md-2" placeholder="Seleziona Filiale" options={
                         this.props.filiali && this.props.filiali.length !== 0 && this.props.filiali.map(filiale => {
                             return {
-                                value: filiale.nome,
+                                value: filiale.id,
                                 label: filiale.nome
                             }
                         })
