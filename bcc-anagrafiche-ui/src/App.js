@@ -21,11 +21,12 @@ class App extends Component {
     roles: [],
     filiali: [],
     clienti: [],
-    codiceUnivoco: null
+    codiceUnivoco: null,
+    statsTotali: {}
    }
 
    componentWillMount() {
-     if(this.props.location === "" || this.props.location === "/")
+    //  if(this.props.location === "" || this.props.location === "")
     this.props.history.push("/login");
 
     for (let api in config) {
@@ -81,10 +82,37 @@ class App extends Component {
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
     console.log(values.date)
-    axios.get(config.apiClienteEndpoint + "?idFiliale=" + values.filiale + "&nag=" + values.nag + "&nome=" + values.nome + "&dataNascita=" + values.date , conf)
-    .then(response => this.setState({clienti: response.data}))
-    .catch(err => console.log(err.response))
+    if(values.nome !== "" && values.date !== null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome === "" && values.date !== null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&birthDate=" + values.date , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome !== "" && values.date === null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome , conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
+    else if(values.nome === "" && values.date === null){
+      axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag, conf)
+      .then(response => this.setState({clienti: response.data}))
+      .catch(err => console.log(err.response))
+    }
   }
+
+
+  handleTotali = (values) => {
+    const headers = { "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+    axios.get(config.apiStatsTotali, conf)
+      .then(response => {console.log(response); this.setState({statsTotali: response.data})})
+      .catch(err => console.log(err.response))
+  }
+
 
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
     const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
@@ -144,7 +172,7 @@ class App extends Component {
               <Route
                 path="/report"
                 exact
-                render={(props) => <Report  {...props} />}
+                render={(props) => <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>}
               />
           </Switch>
       </div>
