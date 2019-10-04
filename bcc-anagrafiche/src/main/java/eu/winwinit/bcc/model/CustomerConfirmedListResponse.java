@@ -18,7 +18,7 @@ public class CustomerConfirmedListResponse {
 	private Boolean p5Edited = false;
 	private Boolean p6Edited = false;
 	private Boolean firmaEdited = false;
-	private Integer editedFieldsSummary;
+	private String editedFieldsSummary;
 	
 	public Integer getId() {
 		return id;
@@ -132,11 +132,11 @@ public class CustomerConfirmedListResponse {
 		this.firmaEdited = firmaEdited;
 	}
 
-	public Integer getEditedFieldsSummary() {
+	public String getEditedFieldsSummary() {
 		return editedFieldsSummary;
 	}
-	
-	public void setEditedFieldsSummary(Integer editedFieldsSummary) {
+
+	public void setEditedFieldsSummary(String editedFieldsSummary) {
 		this.editedFieldsSummary = editedFieldsSummary;
 	}
 	
