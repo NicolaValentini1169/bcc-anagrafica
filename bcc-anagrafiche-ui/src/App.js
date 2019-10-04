@@ -109,7 +109,6 @@ class App extends Component {
   }
 
   render() { 
-    console.log(this.props.location.pathname);
     return (
       <div className="App">
         {this.props.location.pathname === "/" || this.props.location.pathname === "/login" || this.props.location.pathname === "" ? "" : <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>}
