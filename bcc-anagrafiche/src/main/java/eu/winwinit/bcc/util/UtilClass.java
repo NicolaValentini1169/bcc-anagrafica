@@ -35,8 +35,8 @@ public class UtilClass {
 		customerConfirmedListResponse.setCodice(cliente.getCodice());
 		customerConfirmedListResponse.setNag(cliente.getNag());
 		customerConfirmedListResponse.setData(cliente.getLastModify());
-//		customerConfirmedListResponse.setFiliale((filialeRepository.findById(cliente.getFiliali().getId())).get().getNome());
-//		customerConfirmedListResponse.setEditedFieldsSummary(editedFieldsSummaryCalculator(customerConfirmedListResponse));
+		customerConfirmedListResponse.setFiliale(cliente.getFiliali().getNome());
+		customerConfirmedListResponse.setEditedFieldsSummary(editedFieldsSummaryCalculator(customerConfirmedListResponse));
 		return customerConfirmedListResponse;
 	}
 	
@@ -80,13 +80,24 @@ public class UtilClass {
 	
 	private String editedFieldsSummaryCalculator(CustomerConfirmedListResponse customerConfirmedListResponse) {
 		String editedFieldSummary = "";
-		if (customerConfirmedListResponse.getTelefonoEdited() == true) {
-			editedFieldSummary = editedFieldSummary + "1";
-		} else {
-			editedFieldSummary = editedFieldSummary + "0";
-		}
-			
-			
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getTelefonoEdited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getEmailEdited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP1Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP2Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP3Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP4Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP5Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getP6Edited());
+		editedFieldSummary = editedFieldSummary + setZeroOrOne(customerConfirmedListResponse.getFirmaEdited());
 		return editedFieldSummary;
 	}
+	
+	private String setZeroOrOne(boolean booleanValue) {
+		if(booleanValue) {
+			return "1";
+		} else {
+			return "0";
+		}
+	}
+	
 }
