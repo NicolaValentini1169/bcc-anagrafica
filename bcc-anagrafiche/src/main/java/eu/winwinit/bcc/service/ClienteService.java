@@ -2,15 +2,22 @@ package eu.winwinit.bcc.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import eu.winwinit.bcc.entities.Cliente;
-import eu.winwinit.bcc.entities.Filiale;
 
-public interface ClienteService{
+public interface ClienteService {
 	
 	public Cliente findByNag(String nag);
 
 	public List<Cliente> findByNome(String nome);
 	
-	public List<Cliente> findAllByFilialiAndNagLikeAndNomeAndData(Integer id, String nag, String nome, Date date);
+	public Optional<Cliente> findById(Integer id);
+
+	public void save(Cliente cliente);
+	
+	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate);
+	
+	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate);
+
 }
