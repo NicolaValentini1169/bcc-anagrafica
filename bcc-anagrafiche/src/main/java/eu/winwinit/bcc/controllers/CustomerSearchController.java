@@ -1,9 +1,12 @@
 package eu.winwinit.bcc.controllers;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.naming.NamingException;
 
@@ -17,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.entities.Cliente;
+import eu.winwinit.bcc.entities.Filiale;
 import eu.winwinit.bcc.entities.Utente;
 import eu.winwinit.bcc.model.CustomerSearchRequest;
+import eu.winwinit.bcc.repository.FilialeRepository;
 import eu.winwinit.bcc.service.ClienteService;
 
 @RestController
@@ -28,14 +33,29 @@ public class CustomerSearchController {
 	@Autowired
 	ClienteService clienteService;
 	
+	@Autowired
+	FilialeRepository filialeRepository;
+	
     private Logger log = LoggerFactory.getLogger(CustomerSearchController.class);
 
     @RequestMapping(value = "customer-search", method = RequestMethod.GET)
-    public ResponseEntity<List<Cliente>> customerSearch(CustomerSearchRequest customerSearchRequest) throws NamingException, SQLException {
+    public ResponseEntity<List<Cliente>> customerSearch(@RequestParam("idFiliale") int idFiliale,
+    		@RequestParam("nag") String nag, @RequestParam("nome") String nome, @RequestParam("dataNascita") String dataNascita) throws NamingException, SQLException {
     
     	log.debug("customerSearch() START");
-
-        List<Cliente> listaCliente = mockListaClienti();
+    	
+//    		Optional<Filiale> filiali = filialeRepository.findById(idFiliale);
+    		Date data = null;
+			try {
+				data = new SimpleDateFormat("MM/dd/yyyy").parse(dataNascita);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		List<Cliente> listaCliente = clienteService.findAllByFilialiAndNagLikeAndNomeAndData(idFiliale, nag, nome, data);
+    	
+    	
+//        List<Cliente> listaCliente = mockListaClienti();
         //List<Cliente> listaCliente = getListaClienti();
     	        
     	return ResponseEntity.ok(listaCliente);

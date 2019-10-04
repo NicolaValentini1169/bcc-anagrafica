@@ -12,7 +12,7 @@ class OperazioneCompletata extends Component {
     render() { 
         return ( 
         <React.Fragment>
-        <Navbar /> 
+        {/* <Navbar username={this.props.username}/>  */}
         <div className="containerOperation">
         <div className="row">
             <h3 className="col-md-12">{LABELS.OPERAZIONE_COMPLETATA}</h3>
