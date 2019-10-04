@@ -26,7 +26,7 @@ class App extends Component {
    }
 
    componentWillMount() {
-     if(this.props.location === "" || this.props.location === "")
+    //  if(this.props.location === "" || this.props.location === "")
     this.props.history.push("/login");
 
     for (let api in config) {

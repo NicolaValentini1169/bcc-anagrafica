@@ -36,10 +36,12 @@ public class CustomerSearchController {
     		@RequestParam(value="customerName", required = false) String customerName,
     		@RequestParam(value="birthDate", required = false) Date birthDate
     		) {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");   
+    	String dataNascita = null;
+    	if(birthDate!= null) 	
+    		dataNascita = sdf.format(birthDate);
     	
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");       
-        List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerNameAndBirthDate(filiale, nag, customerName, sdf.format(birthDate));
-//    	List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerDateAndBirthDate(filiale, nag, customerName, birthDate);
+        List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerNameAndBirthDate(filiale, nag, customerName, dataNascita);
     	
     	return new ResponseEntity<>(clientiList, HttpStatus.OK);
     }
