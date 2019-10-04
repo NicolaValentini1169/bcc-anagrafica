@@ -111,6 +111,20 @@ body, html {
   border-radius: 3px;
 }
 
+.commondFieldset{
+  border: 1px black solid;
+  padding: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  border-radius: 3px;
+}
+
+.commondFieldsetLabel{
+  margin-left: 20px;
+}
+
 .formRicercaClientiError {
   border: 1px black solid;
   height: 180px;

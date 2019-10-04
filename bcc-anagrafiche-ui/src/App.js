@@ -21,7 +21,8 @@ class App extends Component {
     roles: [],
     filiali: [],
     clienti: [],
-    codiceUnivoco: null
+    codiceUnivoco: null,
+    statsTotali: {}
    }
 
    componentWillMount() {
@@ -103,6 +104,16 @@ class App extends Component {
     }
   }
 
+
+  handleTotali = (values) => {
+    const headers = { "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+    axios.get(config.apiStatsTotali, conf)
+      .then(response => {console.log(response); this.setState({statsTotali: response.data})})
+      .catch(err => console.log(err.response))
+  }
+
+
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
     const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
@@ -180,7 +191,7 @@ class App extends Component {
               <Route
                 path="/report"
                 exact
-                render={(props) => <Report  {...props} />}
+                render={(props) => <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>}
               />
           </Switch>
       </div>

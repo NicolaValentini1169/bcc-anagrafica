@@ -45,10 +45,6 @@ public class CustomerConfirmedListController {
 		
 		for(Cliente cliente : clienteList) {
 			listVariazioneCliente.addAll(variazioneClienteRepository.findAllByClienti(cliente));
-			
-			// ora mi mappo il cliente e relativi campi nell'oggetto di response apposito 
-			
-			// metodo che mappa cliente e listVariazioneCliente in un oggetto 
 			variazioneClienteListResponse.add(utilClass.toCustomerConfirmedListResponse(cliente, listVariazioneCliente)); 
 			listVariazioneCliente.clear();
 		}
