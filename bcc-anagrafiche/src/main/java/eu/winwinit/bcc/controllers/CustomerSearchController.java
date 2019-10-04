@@ -1,5 +1,6 @@
 package eu.winwinit.bcc.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,11 +33,13 @@ public class CustomerSearchController {
     		@RequestHeader(value=AuthorityRolesConstants.HEADER_STRING) String jwtToken,
     		@RequestParam(value="branch") Integer filiale,
     		@RequestParam(value="nag") String nag,
-    		@RequestParam(value="customerName") String customerName,
-    		@RequestParam(value="birthDate") Date birthDate
+    		@RequestParam(value="customerName", required = false) String customerName,
+    		@RequestParam(value="birthDate", required = false) Date birthDate
     		) {
     	
-    	List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerDateAndBirthDate(filiale, nag, customerName, birthDate);
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");       
+        List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerNameAndBirthDate(filiale, nag, customerName, sdf.format(birthDate));
+//    	List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerDateAndBirthDate(filiale, nag, customerName, birthDate);
     	
     	return new ResponseEntity<>(clientiList, HttpStatus.OK);
     }

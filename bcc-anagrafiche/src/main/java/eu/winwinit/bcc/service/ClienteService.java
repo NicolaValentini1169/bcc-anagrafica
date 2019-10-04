@@ -18,6 +18,6 @@ public interface ClienteService {
 	
 	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate);
 	
-	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate);
+	public List<Cliente> findByBranchAndNagAndCustomerNameAndBirthDate(Integer branch, String nag, String customerName, String birthDate);
 
 }
