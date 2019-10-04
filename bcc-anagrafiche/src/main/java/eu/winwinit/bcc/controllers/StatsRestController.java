@@ -15,14 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eu.winwinit.bcc.model.StatisticsRequest;
 import eu.winwinit.bcc.model.StatisticsResponse;
-import eu.winwinit.bcc.service.ReportsService;
+import eu.winwinit.bcc.repository.StatisticsRepository;
+import eu.winwinit.bcc.service.ClienteService;
+import eu.winwinit.bcc.service.StatisticsService;
 
 @RestController
 @RequestMapping("/api/v1")
 public class StatsRestController {
 	
 	@Autowired
-	ReportsService reportsService;
+	StatisticsService statisticsService;
+
+	@Autowired
+	ClienteService clienteService;
+
 	
     private Logger log = LoggerFactory.getLogger(StatsRestController.class);
 
@@ -33,7 +39,7 @@ public class StatsRestController {
     	log.debug("getStats() START");
 
         //StatisticsResponse statisticsResponse = getMockStatisticsResponse();
-        StatisticsResponse statisticsResponse = reportsService.retrieveStatistics(StatisticsRequest);
+        StatisticsResponse statisticsResponse = statisticsService.retrieveStatistics(StatisticsRequest);
         
     	return ResponseEntity.ok(statisticsResponse);
     }
