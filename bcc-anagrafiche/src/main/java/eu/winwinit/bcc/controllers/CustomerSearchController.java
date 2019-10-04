@@ -52,10 +52,10 @@ public class CustomerSearchController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		List<Cliente> listaCliente = clienteService.findAllByFilialiAndNagLikeAndNomeAndData(idFiliale, nag, nome, data);
+//    		List<Cliente> listaCliente = clienteService.findAllByFilialiAndNagLikeAndNomeAndData(idFiliale, nag, nome, data);
     	
     	
-//        List<Cliente> listaCliente = mockListaClienti();
+        List<Cliente> listaCliente = mockListaClienti();
         //List<Cliente> listaCliente = getListaClienti();
     	        
     	return ResponseEntity.ok(listaCliente);
