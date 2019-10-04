@@ -46,9 +46,4 @@ public class ClienteServiceImpl implements ClienteService{
 		return clienteRepository.findByBranchAndNagAndCustomerDateAndBirthDate(branch, nag, customerName, birthDate);
 	}
 
-	@Override
-	public List<Cliente> findByDataNascita(Date dataNascita) {
-		return clienteRepository.findByDataNascita(dataNascita);
-	}
-	
 }

@@ -20,5 +20,4 @@ public interface ClienteService {
 	
 	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(Integer branch, String nag, String customerName, Date birthDate);
 
-	public List<Cliente> findByDataNascita(Date dataNascita);
 }

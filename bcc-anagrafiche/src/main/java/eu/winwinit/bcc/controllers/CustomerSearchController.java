@@ -1,11 +1,10 @@
 package eu.winwinit.bcc.controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,16 +32,9 @@ public class CustomerSearchController {
     		@RequestParam(value="birthDate") Date birthDate
     		) {
     	
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-    	System.out.println("================== DATA" + sdf.format(birthDate));
-    	
     	List<Cliente> clientiList = clienteService.findByBranchAndNagAndCustomerDateAndBirthDate(filiale, nag, customerName, birthDate);
     	
-    	List<Cliente> clientiData = clienteService.findByDataNascita(birthDate);
-    	
-//    	System.out.println("ciaociao");
-    	
-    	return ResponseEntity.ok(null);
+    	return new ResponseEntity<>(clientiList, HttpStatus.OK);
     }
 
 

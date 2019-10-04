@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import eu.winwinit.bcc.entities.Cliente;
@@ -27,7 +26,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	@Query(value = "select c "
 				 + "FROM Cliente c "
 				 + "WHERE filiale = :branch "
-				 + "AND nag = :nag "
+				 + "AND nag LIkE :nag% "
 				 + "AND nome = :customerName "
 				 + "AND data_nascita = :birthDate")
 	public List<Cliente> findByBranchAndNagAndCustomerDateAndBirthDate(	@Param("branch")Integer branch,
@@ -35,10 +34,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 																		@Param("customerName")String customerName,
 																		@Param("birthDate")Date birthDate );
 	
-//	@Query(value = "select * from clienti where data_nascita = :dataNascita ", nativeQuery = true)
-//	public List<Cliente> findByDataNascita(@Param("dataNascita")Date dataNascita); 
-
-	public List<Cliente> findByDataNascita(Date dataNascita);
-
-
 }
