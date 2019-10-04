@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import eu.winwinit.bcc.entities.Cliente;
+import eu.winwinit.bcc.entities.Filiale;
 
 @Repository("clienteRepository")
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {

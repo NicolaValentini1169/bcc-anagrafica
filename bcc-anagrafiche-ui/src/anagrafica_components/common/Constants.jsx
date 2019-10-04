@@ -11,7 +11,7 @@ export const LABELS={
     DATA_DI_NASCITA: "Data di nascita:",
     ATTENZIONE: "ATTENZIONE",
     ANAGRAFICA_CLIENTE_TEXT: "L'anagrafica del cliente è già stata verificata in",
-    DATA_INSERITA: "data INSERIRE DATA",
+    DATA_INSERITA: "data ",
     CODICE_UNIVOCO: "Il codice univoco assegnato è ",
     STAMPA: "STAMPA",
     CERCA: "CERCA",
