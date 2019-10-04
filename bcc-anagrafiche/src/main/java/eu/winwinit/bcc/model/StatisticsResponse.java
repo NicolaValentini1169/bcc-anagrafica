@@ -14,6 +14,30 @@ public class StatisticsResponse {
 	int totEditedPrivacy5=0;
 	int totEditedPrivacy6=0;
 	
+	
+	public StatisticsResponse() {
+		super();
+	}
+	
+	public StatisticsResponse(int totCustomers, int totConfirmedRecords, int totChangedRecords,
+			int totNotConfirmedRecords, int totEditedPhone, int totEditedEmail, int totEditedPrivacy1,
+			int totEditedPrivacy2, int totEditedPrivacy3, int totEditedPrivacy4, int totEditedPrivacy5,
+			int totEditedPrivacy6) {
+		super();
+		this.totCustomers = totCustomers;
+		this.totConfirmedRecords = totConfirmedRecords;
+		this.totChangedRecords = totChangedRecords;
+		this.totNotConfirmedRecords = totNotConfirmedRecords;
+		this.totEditedPhone = totEditedPhone;
+		this.totEditedEmail = totEditedEmail;
+		this.totEditedPrivacy1 = totEditedPrivacy1;
+		this.totEditedPrivacy2 = totEditedPrivacy2;
+		this.totEditedPrivacy3 = totEditedPrivacy3;
+		this.totEditedPrivacy4 = totEditedPrivacy4;
+		this.totEditedPrivacy5 = totEditedPrivacy5;
+		this.totEditedPrivacy6 = totEditedPrivacy6;
+	}
+
 	public int getTotCustomers() {
 		return totCustomers;
 	}
