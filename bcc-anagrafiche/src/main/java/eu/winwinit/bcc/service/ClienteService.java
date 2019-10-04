@@ -1,5 +1,6 @@
 package eu.winwinit.bcc.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +16,5 @@ public interface ClienteService{
 
 	public void save(Cliente cliente);
 	
+	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate);
 }

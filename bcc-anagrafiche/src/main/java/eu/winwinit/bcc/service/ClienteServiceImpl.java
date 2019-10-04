@@ -1,5 +1,6 @@
 package eu.winwinit.bcc.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,11 @@ public class ClienteServiceImpl implements ClienteService{
 	@Override
 	public void save(Cliente cliente) {
 		clienteRepository.save(cliente);
+	}
+
+	@Override
+	public List<Cliente> findByDateAndConfermato(Date startDate, Date endDate) {
+		return clienteRepository.findByDateAndConfermato(startDate, endDate);
 	}
 	
 }

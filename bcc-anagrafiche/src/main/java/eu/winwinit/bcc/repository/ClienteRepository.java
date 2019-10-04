@@ -1,9 +1,11 @@
 package eu.winwinit.bcc.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import eu.winwinit.bcc.entities.Cliente;
@@ -15,4 +17,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	
 	@Query("select c from Cliente c where nome like ?1%")
 	List<Cliente> findByNome(String nome); 
+	
+	@Query(value = "FROM Cliente c "
+				 + "WHERE last_modify BETWEEN :startDate AND :endDate "
+				 + "AND confermato = 1")
+	public List<Cliente> findByDateAndConfermato(@Param("startDate")Date startDate,@Param("endDate")Date endDate);
+	
 }
