@@ -6,7 +6,7 @@ class OperazioneCompletata extends Component {
     state = {  }
 
     backToResearch = () => {
-        this.props.history.push("/ricerca-clienti");
+        this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
     }
 
     render() { 
