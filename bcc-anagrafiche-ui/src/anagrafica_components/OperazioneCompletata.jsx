@@ -6,7 +6,7 @@ class OperazioneCompletata extends Component {
     state = {  }
 
     backToResearch = () => {
-        this.props.history.push("/ricerca-clienti");
+        this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
     }
 
     render() { 
@@ -19,7 +19,7 @@ class OperazioneCompletata extends Component {
             <p  className="col-md-12">{LABELS.CODICE_ASSEGNATO}</p>
             <p  className="col-md-12 mb-5">{this.props.codiceUnivoco ? this.props.codiceUnivoco : ""}</p>
             <button className="col-md-3 offset-md-2 btn btn-success" onClick={() => this.backToResearch()}>{LABELS.NUOVA_RICERCA}</button>
-            <button className="col-md-3 offset-md-2 btn btn-primary">{LABELS.STAMPA}</button>
+            <button className="col-md-3 offset-md-2 btn btn-primary" onClick={() => this.props.downloadFile()}>{LABELS.SCARICA}</button>
             
         </div>
         </div>

@@ -146,7 +146,7 @@ export class RicercaClienti extends Component {
                 <p className="col-md-3 offset-md-3">{LABELS.ANAGRAFICA_CLIENTE_TEXT}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA} {" "} {<Moment format="DD/MM/YYYY">{this.state.cliente.lastModify}</Moment>}</p>
                 <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {this.state.cliente.codice}</p>
-                <button type="button" className="btn btn-primary col-md-1 offset-md-3">{LABELS.STAMPA}</button>
+                <button type="button" className="btn btn-primary col-md-1 offset-md-3" onClick={() => this.props.downloadFile()}>{LABELS.SCARICA}</button>
                 <button className="btn btn-primary col-md-1 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
                 </div>
                 : ""}

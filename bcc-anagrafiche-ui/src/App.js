@@ -26,13 +26,14 @@ class App extends Component {
    }
 
    componentWillMount() {
-    //  if(this.props.location === "" || this.props.location === "")
-    this.props.history.push("/login");
 
+     if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
+    this.props.history.push(window.defConfigurations.url_prefix + "login");
+    
     for (let api in config) {
       config[api] = config[api].replace(
         "[REACT_APP_URL_JAVA]",
-        process.env.REACT_APP_URL_JAVA
+        window.defConfigurations.REACT_APP_URL_JAVA
       );
     }
     // this.handleCheckToken(this.props.location.pathname);
@@ -45,18 +46,17 @@ class App extends Component {
     let roles = [];
 
     axios.post(config.apiLoginEndpoint, loginRequest, conf)
-    .then(response => {console.log(response)
+    .then(response => {
         roles = [...response.data.roles];
         localStorage.setItem("TOKEN", response.data.accessToken);
         localStorage.setItem("USERNAME", response.data.username);
         this.setState({roles: roles, username: response.data.username,
            userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
-        console.log(roles[0].authority, roles[0])
         if(roles.length === 1 && roles[0].authority === USER_TYPE.USER){
           this.utilitiesForUser();
-          this.props.history.push("/ricerca-clienti");
+          this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
         } else {
-          this.props.history.push("/importa-clienti");
+          this.props.history.push(window.defConfigurations.url_prefix + "importa-clienti");
         }
      }
     )
@@ -81,7 +81,7 @@ class App extends Component {
     
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
-    console.log(values.date)
+
     if(values.nome !== "" && values.date !== null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
       .then(response => this.setState({clienti: response.data}))
@@ -109,7 +109,7 @@ class App extends Component {
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
     axios.get(config.apiStatsTotali, conf)
-      .then(response => {console.log(response); this.setState({statsTotali: response.data})})
+      .then(response => {this.setState({statsTotali: response.data})})
       .catch(err => console.log(err.response))
   }
 
@@ -117,60 +117,78 @@ class App extends Component {
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
     const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
-    console.log(markAsEditedRequest)
     axios.post(config.apiVerifyAnagraficaEndpoint, markAsEditedRequest, conf)
     .then(response => {
       if(response.data === "OK"){
         this.setState({codiceUnivoco: codiceUnivoco, clienti: []});
-        this.props.history.push("/ricerca-completata");
+        this.props.history.push(window.defConfigurations.url_prefix + "ricerca-completata");
       }
     })
     .catch(err => console.log(err))
   }
 
   goToReport = () => {
-    this.props.history.push("/report");
+    this.props.history.push(window.defConfigurations.url_prefix + "report");
   }
 
   goToResearch = () => {
-    this.props.history.push("/ricerca-clienti");
+    this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
   }
+
+  downloadFile = () => {
+    const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
+    const conf = { headers: { ...headers } };
+
+    axios
+      .get(config.apiDownloadEndpoint, conf)
+      .then(({ data: downloadedFile }) => {
+        let byteArray = new Uint8Array(downloadedFile.file);
+        const url = window.URL.createObjectURL(new Blob([byteArray]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", downloadedFile.name);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch(error => console.log(error));
+  };
 
   render() { 
     return (
       <div className="App">
-        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" || this.props.location.pathname === "" ? "" : <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>}
+        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" || this.props.location.pathname === window.defConfigurations.url_prefix + "login" || this.props.location.pathname === "" ? "" : <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>}
          <Switch>
               <Route
-                path="/login"
+                path={window.defConfigurations.url_prefix + "login"}
                 exact
                 render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}
               />
               <Route
-                path="/"
+                path={window.defConfigurations.url_prefix + ""}
                 exact
                 render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}
               />
               <Route
-                path="/ricerca-clienti"
+                path={window.defConfigurations.url_prefix + "ricerca-clienti"}
                 exact
                 render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
                                                   username={this.state.username} userType={this.state.userType}
                                                   filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
-                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}/>}
+                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
+                                                  downloadFile={this.downloadFile}/>}
               />
                <Route
-                path="/importa-clienti"
+                path={window.defConfigurations.url_prefix + "importa-clienti"}
                 exact
                 render={(props) => <ImportaClienti  {...props}/>}
               />
               <Route
-                path="/ricerca-completata"
+                path={window.defConfigurations.url_prefix + "ricerca-completata"}
                 exact
-                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username}/>}
+                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username} downloadFile={this.downloadFile}/>}
               />
               <Route
-                path="/report"
+                path={window.defConfigurations.url_prefix + "report"}
                 exact
                 render={(props) => <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>}
               />
