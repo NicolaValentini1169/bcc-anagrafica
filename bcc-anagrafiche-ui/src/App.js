@@ -28,7 +28,7 @@ class App extends Component {
    componentWillMount() {
 
     if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
-    this.props.history.push(window.defConfigurations.url_prefix + "login");
+    this.props.history.replace(window.defConfigurations.url_prefix + "login");
     
     for (let api in config) {
       config[api] = config[api].replace(
