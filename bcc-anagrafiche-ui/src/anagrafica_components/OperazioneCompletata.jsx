@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
 import {LABELS} from "./common/Constants";
+import { Link } from "react-router-dom";
 
 class OperazioneCompletata extends Component {
     state = {  }
 
-    backToResearch = () => {
-        this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
-    }
 
     render() { 
         return ( 
@@ -18,7 +15,7 @@ class OperazioneCompletata extends Component {
             <h3 className="col-md-12">{LABELS.OPERAZIONE_COMPLETATA}</h3>
             <p  className="col-md-12">{LABELS.CODICE_ASSEGNATO}</p>
             <p  className="col-md-12 mb-5">{this.props.codiceUnivoco ? this.props.codiceUnivoco : ""}</p>
-            <button className="col-md-3 offset-md-2 btn btn-success" onClick={() => this.backToResearch()}>{LABELS.NUOVA_RICERCA}</button>
+            <Link className="col-md-3 offset-md-2 btn btn-success" to="/ricerca-clienti">{LABELS.NUOVA_RICERCA}</Link>
             <button className="col-md-3 offset-md-2 btn btn-primary" onClick={() => this.props.downloadFile()}>{LABELS.SCARICA}</button>
             
         </div>

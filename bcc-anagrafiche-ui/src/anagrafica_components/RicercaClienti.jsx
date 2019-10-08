@@ -8,7 +8,7 @@ import moment from 'moment';
 
 export class RicercaClienti extends Component {
     state = { 
-        isSingleAndNotConfirmed: false,
+        isNotConfermata: false,
         isConfermata: false,
         ricerca: {
             date: null,
@@ -27,7 +27,6 @@ export class RicercaClienti extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log("nuove props", props)
         if(props.clienti !== undefined && props.clienti.length !== 0){
             this.setState({clienti: props.clienti, showListaClienti: true})
         }
@@ -50,7 +49,6 @@ export class RicercaClienti extends Component {
     }
 
     onChangeFiliale = (filiale) => {
-        console.log(filiale)
         let ricerca = {...this.state.ricerca};
 
         ricerca["filiale"] = filiale.value;
@@ -63,7 +61,7 @@ export class RicercaClienti extends Component {
         
         if(ricerca.date !== null){ricerca.date = moment(ricerca.date).format("MM/DD/YYYY")}
         if(ricerca.nag.length >= 3){
-            this.setState({nagError: false});
+            this.setState({nagError: false, isConfermata: false, isNotConfermata: false, showListaClienti: false});
             this.props.handleFindCliente(ricerca);
         } else {
             this.setState({nagError: true});
@@ -74,11 +72,11 @@ export class RicercaClienti extends Component {
         if(cliente.confermato)
         this.setState({cliente: cliente, showListaClienti: false, isConfermata: true })
         if(!cliente.confermato)
-        this.setState({cliente: cliente, showListaClienti: false, isSingleAndNotConfirmed: true })
+        this.setState({cliente: cliente, showListaClienti: false, isNotConfermata: true })
     }
 
     tornaAllaLista = () => {
-        this.setState({showListaClienti: true, isConfermata: false, isSingleAndNotConfirmed: false});
+        this.setState({showListaClienti: true, isConfermata: false, isNotConfermata: false});
     }
 
     render() { 
@@ -88,7 +86,7 @@ export class RicercaClienti extends Component {
             <h2 className="text-left ricercaClienti">{LABELS.RICERCA_CLIENTE}</h2>
             <form className={!this.state.nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
                 <div className="row">
-                    <label className="col-1 labelForm">{LABELS.FILIALE}</label>
+                    <label className="col-1 labelForm noPadding">{LABELS.FILIALE}</label>
                     <Select className="col-md-2" placeholder="Seleziona Filiale" options={
                         this.props.filiali && this.props.filiali.length !== 0 && this.props.filiali.map(filiale => {
                             return {
@@ -97,22 +95,25 @@ export class RicercaClienti extends Component {
                             }
                         })
                     }
-                    onChange={filiale => this.onChangeFiliale(filiale)}/>
+                    onChange={filiale => this.onChangeFiliale(filiale)}
+                    />
                     
-                    <label className="col-1 labelForm">{LABELS.NAG}</label>
+                    <label className="col-1 labelForm noPadding">{LABELS.NAG}</label>
                     <input className={`col-md-2 form-control ${this.state.nagError ? "errorInput" : ""}`} placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nag}/>
-                    <label className="col-1 labelForm">{LABELS.NOME}</label>
+
+                    <label className="col-1 labelForm noPadding">{LABELS.NOME}</label>
                     <input className="col-md-2 form-control" placeholder="NOME CLIENTE" name="nome" onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nome}/>
-                    <label className="col-md-1 labelForm">{LABELS.DATA_DI_NASCITA}</label>
+
+                    <label className="col-md-1 labelForm noPadding">{LABELS.DATA_DI_NASCITA}</label>
                     <DatePicker
                         className="col-md-1"
                         onChange={this.onChange}
                         value={this.state.ricerca.date}
                     />
                 </div>
+
                 {this.state.nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> <div > <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div></React.Fragment>
                 : <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>}
-            
             </form>
 
             {this.state.clienti.length !== 0 && this.state.showListaClienti ?
@@ -151,7 +152,7 @@ export class RicercaClienti extends Component {
                 </div>
                 : ""}
 
-            {this.state.isSingleAndNotConfirmed ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista} cliente={this.state.cliente} handleVerifyRegistry={this.props.handleVerifyRegistry}/> : ""}
+            {this.state.isNotConfermata ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista} cliente={this.state.cliente} handleVerifyRegistry={this.props.handleVerifyRegistry}/> : ""}
             </div>
          );
     }

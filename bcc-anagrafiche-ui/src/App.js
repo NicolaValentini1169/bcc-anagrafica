@@ -27,7 +27,7 @@ class App extends Component {
 
    componentWillMount() {
 
-     if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
+    if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
     this.props.history.push(window.defConfigurations.url_prefix + "login");
     
     for (let api in config) {
@@ -50,8 +50,7 @@ class App extends Component {
         roles = [...response.data.roles];
         localStorage.setItem("TOKEN", response.data.accessToken);
         localStorage.setItem("USERNAME", response.data.username);
-        this.setState({roles: roles, username: response.data.username,
-           userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
+
         if(roles.length === 1 && roles[0].authority === USER_TYPE.USER){
           this.utilitiesForUser();
           this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
@@ -127,14 +126,6 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
-  goToReport = () => {
-    this.props.history.push(window.defConfigurations.url_prefix + "report");
-  }
-
-  goToResearch = () => {
-    this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
-  }
-
   downloadFile = () => {
     const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
@@ -156,7 +147,9 @@ class App extends Component {
   render() { 
     return (
       <div className="App">
-        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" || this.props.location.pathname === window.defConfigurations.url_prefix + "login" || this.props.location.pathname === "" ? "" : <Navbar goToReport={this.goToReport} goToResearch={this.goToResearch}/>}
+        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" 
+        || this.props.location.pathname === window.defConfigurations.url_prefix + "login"
+        || this.props.location.pathname === "" ? "" : <Navbar/>}
          <Switch>
               <Route
                 path={window.defConfigurations.url_prefix + "login"}
