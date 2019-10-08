@@ -118,7 +118,7 @@ export class RicercaClienti extends Component {
             </form>
 
             {this.state.clienti.length !== 0 && this.state.showListaClienti ?
-            <table class="table table-striped tableClienti">
+            <table className="table table-striped tableClienti">
                 <thead>
                 <tr>
                     <th scope="col">Cab</th>
@@ -130,7 +130,7 @@ export class RicercaClienti extends Component {
                 </thead>
                 <tbody>
              {this.state.clienti.map(cliente => {
-                 return( <tr>
+                 return(<tr key={cliente.id}>
                     <td>{cliente.cab ? cliente.cab : ""}</td>
                     <td>{cliente.nag ? cliente.nag : ""}</td>
                     <td>{cliente.nome ? cliente.nome : ""}</td>

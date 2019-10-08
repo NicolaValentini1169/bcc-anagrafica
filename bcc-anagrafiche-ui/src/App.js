@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { withRouter, Route, Switch } from "react-router-dom";
+import { withRouter, Route, Switch/* , Redirect */ } from "react-router-dom";
 import {Login} from "./anagrafica_components/Login";
 import {USER_TYPE} from "./anagrafica_components/common/Constants";
 import {RicercaClienti} from "./anagrafica_components/RicercaClienti";
@@ -51,11 +51,14 @@ class App extends Component {
         localStorage.setItem("TOKEN", response.data.accessToken);
         localStorage.setItem("USERNAME", response.data.username);
 
+        this.setState({roles: roles, username: response.data.username,
+          userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
+
         if(roles.length === 1 && roles[0].authority === USER_TYPE.USER){
           this.utilitiesForUser();
-          this.props.history.push(window.defConfigurations.url_prefix + "ricerca-clienti");
+          this.props.history.replace(window.defConfigurations.url_prefix + "ricerca-clienti");
         } else {
-          this.props.history.push(window.defConfigurations.url_prefix + "importa-clienti");
+          this.props.history.replace(window.defConfigurations.url_prefix + "importa-clienti");
         }
      }
     )
@@ -157,11 +160,6 @@ class App extends Component {
                 render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}
               />
               <Route
-                path={window.defConfigurations.url_prefix + ""}
-                exact
-                render={(props) => <Login {...props} handleLogin={this.handleLogin}/>}
-              />
-              <Route
                 path={window.defConfigurations.url_prefix + "ricerca-clienti"}
                 exact
                 render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
@@ -185,6 +183,7 @@ class App extends Component {
                 exact
                 render={(props) => <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>}
               />
+              {/* <Redirect from="/" to={this.state.userType === USER_TYPE.USER && this.state.username !== "" ? window.defConfigurations.url_prefix + "ricerca-clienti" : this.state.username !== "" ? window.defConfigurations.url_prefix + "importa-clienti" : window.defConfigurations.url_prefix + "login"} /> */}
           </Switch>
       </div>
     );
