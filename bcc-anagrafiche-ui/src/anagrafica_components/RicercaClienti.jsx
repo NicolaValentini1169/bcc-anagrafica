@@ -27,7 +27,8 @@ export class RicercaClienti extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if(props.clienti !== undefined && props.clienti.length !== 0){
+        if(props.clienti !== undefined && props.clienti.length !== 0 
+            && (this.state.isConfermata === false && this.state.isNotConfermata === false && this.state.showListaClienti === false)){
             this.setState({clienti: props.clienti, showListaClienti: true})
         }
     }
