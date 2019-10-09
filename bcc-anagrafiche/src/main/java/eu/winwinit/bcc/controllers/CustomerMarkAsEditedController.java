@@ -57,9 +57,9 @@ public class CustomerMarkAsEditedController {
 			 variazioneCliente.setCampo(key);
 			 variazioneClienteRepository.save(variazioneCliente);
 		 }
-		 cliente.setConfermato(true);
-		 clienteService.save(cliente);
 	 }
+	 cliente.setConfermato(true);
+	 clienteService.save(cliente);
 	 return new ResponseEntity<>(HttpStatus.OK.getReasonPhrase(),HttpStatus.OK);
     }
 }
