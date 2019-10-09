@@ -31,7 +31,11 @@ export const LABELS={
     TORNA_ALLA_LISTA: "Torna alla lista",
     SI: "Si",
     NO: "No",
-    NON_IMPOSTATA: "Non impostata"
+    NON_IMPOSTATA: "Non impostata",
+    CAMPI_OBBLIGATORI: "* Campi obbligatori",
+    NAG_ERROR: "Il nag deve essere di almeno tre caratteri",
+    FILIALE_ERROR: "Selezionare una filiale",
+    NESSUNA_CORRISPONDENZA: "Nessuna corrispondenza trovata"
 }
 
 export const CLASSES = {

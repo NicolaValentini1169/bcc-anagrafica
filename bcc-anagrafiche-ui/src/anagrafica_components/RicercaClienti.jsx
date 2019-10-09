@@ -25,6 +25,7 @@ export class RicercaClienti extends Component {
     }
 
     componentWillMount() {
+        console.log(this.props)
         this.props.handleFindFiliali();
     }
 
@@ -32,7 +33,7 @@ export class RicercaClienti extends Component {
         if(props.clienti !== undefined && props.clienti.length !== 0 
             && (this.state.isConfermata === false && this.state.isNotConfermata === false && this.state.showListaClienti === false)){
             this.setState({clienti: props.clienti, showListaClienti: true, clientiNotFound: false})
-        } else if(props.clientiIsEmpty){
+        } else if(props.clientiIsEmpty){ //if from app.js clienti array is empty we show the message that no customer ha been found
             this.setState({clientiNotFound: true})
         }
     }
@@ -47,12 +48,14 @@ export class RicercaClienti extends Component {
 
     onChangeText = (text) => {
         let ricerca = {...this.state.ricerca};
-
+        //if text parameter is nag input length of value is checked to see if the error need to be shown
         ricerca[text.currentTarget.name] = text.currentTarget.value;
         if(text.currentTarget.name === "nag" && text.currentTarget.value.length >= 3)
         this.setState({ricerca, nagError: false});
-        else
+        else if(text.currentTarget.name === "nag" && text.currentTarget.value.length < 3)
         this.setState({ricerca, nagError: true});
+        else
+        this.setState({ricerca});
     }
 
     onChangeFiliale = (filiale) => {
@@ -67,13 +70,16 @@ export class RicercaClienti extends Component {
         let ricerca = {...this.state.ricerca}
         
         if(ricerca.date !== null){ricerca.date = moment(ricerca.date).format("MM/DD/YYYY")}
+        //when there is no error both from nag and filiale axios call will be made
         if(ricerca.nag.length >= 3 && this.state.ricerca.filiale !== ""){
             this.setState({nagError: false, isConfermata: false, isNotConfermata: false, showListaClienti: false, filialeError: null});
             this.props.handleFindCliente(ricerca);
         } else {
-            ricerca.nag.length >= 3 && ricerca.filiale === "" ? this.setState({filialeError: true}) 
-            : ricerca.nag.length < 3 && ricerca.filiale === "" ? this.setState({nagError: true, filialeError: true}) 
-            : this.setState({nagError: true});
+            //checking if error is only nag, only filiale or both. In any case if one of the boolean is true so something is present under the form
+            // it will be hide to show the error in the form
+            ricerca.nag.length >= 3 && ricerca.filiale === "" ? this.setState({filialeError: true,  isConfermata: false, isNotConfermata: false, showListaClienti: false, clientiNotFound: false}) 
+            : ricerca.nag.length < 3 && ricerca.filiale === "" ? this.setState({nagError: true, filialeError: true,  isConfermata: false, isNotConfermata: false, showListaClienti: false, clientiNotFound: false}) 
+            : this.setState({nagError: true,  isConfermata: false, isNotConfermata: false, showListaClienti: false, clientiNotFound: false});
         }
     }
 
@@ -90,21 +96,21 @@ export class RicercaClienti extends Component {
 
     renderButtonCerca = () => {
         return ( <div className="row">
-        <span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
+        <span className="col-md-2 ml-3 mt-4 text-left">{LABELS.CAMPI_OBBLIGATORI}</span>
         <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>)
     }
 
     renderSpanNag = () => {
-        return <div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div>
+        return <div className="row"><span className="text-danger col-md-10">{LABELS.NAG_ERROR}</span></div>
     }
 
     renderSpanFiliale = () => {
-        return <div className="row"><span className="text-danger span-error-filiale col-md-2">Selezionare una filiale</span></div>
+        return <div className="row"><span className="text-danger span-error-filiale col-md-2">{LABELS.FILIALE_ERROR}</span></div>
     }
 
     renderSpanNagAndFiliale = () => {
-        return <div className="row"><span className="text-danger span-error-filiale col-md-2">Selezionare una filiale</span> 
-        <span className="text-danger col-md-4 span-error-nag">Il nag deve essere di almeno tre caratteri</span></div>
+        return <div className="row"><span className="text-danger span-error-filiale col-md-2">{LABELS.FILIALE_ERROR}</span> 
+        <span className="text-danger col-md-4 span-error-nag">{LABELS.NAG_ERROR}</span></div>
     }
 
     render() { 
@@ -190,7 +196,7 @@ export class RicercaClienti extends Component {
             {clientiNotFound ? 
             <div className="text-left bottoneRicerca">
                 <h2 className="col-md-2 offset-md-3">{LABELS.ATTENZIONE}</h2>
-                <p className="col-md-3 offset-md-3">Nessuna corrispondenza trovata</p>
+                <p className="col-md-3 offset-md-3">{LABELS.NESSUNA_CORRISPONDENZA}</p>
                 </div>
                 : ""}
 

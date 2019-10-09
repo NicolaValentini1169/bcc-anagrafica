@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { withRouter, Route, Switch/* , Redirect */ } from "react-router-dom";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import {Login} from "./anagrafica_components/Login";
 import {USER_TYPE} from "./anagrafica_components/common/Constants";
 import {RicercaClienti} from "./anagrafica_components/RicercaClienti";
@@ -28,8 +28,11 @@ class App extends Component {
 
    componentWillMount() {
     //this if handle an eventual modification of URL from the user and redirect it to the login
-    if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
-    this.props.history.replace(window.defConfigurations.url_prefix + "login");
+    if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix){
+      localStorage.removeItem("TOKEN");
+      console.log(localStorage.getItem("TOKEN"))
+      this.props.history.replace(window.defConfigurations.url_prefix + "login");
+    }
     
     for (let api in config) {
       config[api] = config[api].replace(
@@ -47,7 +50,7 @@ class App extends Component {
     let roles = [];
 
     axios.post(config.apiLoginEndpoint, loginRequest, conf)
-    .then(response => {
+    .then(response => {console.log(response)
         roles = [...response.data.roles];
         //saving token and username in local storage to persist data for the session
         localStorage.setItem("TOKEN", response.data.accessToken);
@@ -64,7 +67,7 @@ class App extends Component {
         }
      }
     )
-    .catch(err => console.log(err));
+    .catch(err => console.log(err.response));
   }
 
   utilitiesForUser = () => {
@@ -82,7 +85,6 @@ class App extends Component {
   }
 
   handleFindCliente = (values) => {
-    
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
     //this if are needed to check if the user compiled all field or only the required fields. Then create the axios get and handle the response
@@ -108,7 +110,6 @@ class App extends Component {
     }
   }
 
-
   handleTotali = () => {
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
@@ -116,7 +117,6 @@ class App extends Component {
       .then(response => {this.setState({statsTotali: response.data})})
       .catch(err => console.log(err.response))
   }
-
 
   handleVerifyRegistry = (markAsEditedRequest, codiceUnivoco) => {
     const headers = { "Content-Type": "application/json", "Authorization": localStorage.getItem("TOKEN")};
@@ -157,6 +157,7 @@ class App extends Component {
   }
 
   render() { 
+    const {userType} = this.state;
     return (
       <div className="App">
         {this.renderNavbar()}
@@ -168,27 +169,35 @@ class App extends Component {
               />
               <Route
                 path={window.defConfigurations.url_prefix + "ricerca-clienti"}
-                exact
-                render={(props) => <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
+                
+                render={(props) => localStorage.getItem("TOKEN") !== null ? <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
                                                   username={this.state.username} userType={this.state.userType}
                                                   filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
                                                   clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
-                                                  downloadFile={this.downloadFile} clientiIsEmpty={this.state.clientiIsEmpty}/>}
+                                                  downloadFile={this.downloadFile} clientiIsEmpty={this.state.clientiIsEmpty}/> 
+                                                  : <Redirect to={window.defConfigurations.url_prefix + "login"} />}
               />
                <Route
                 path={window.defConfigurations.url_prefix + "importa-clienti"}
                 exact
-                render={(props) => <ImportaClienti  {...props}/>}
+                render={(props) => localStorage.getItem("TOKEN") !== null ? userType === USER_TYPE.ADMINISTRATOR ? 
+                <ImportaClienti  {...props}/> 
+                : <Redirect to={window.defConfigurations.url_prefix + "ricerca-clienti"} /> 
+                : <Redirect to={window.defConfigurations.url_prefix + "login"} /> }
               />
               <Route
                 path={window.defConfigurations.url_prefix + "ricerca-completata"}
                 exact
-                render={(props) => <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username} downloadFile={this.downloadFile}/>}
+                render={(props) => localStorage.getItem("TOKEN") !== null ? 
+                <OperazioneCompletata  {...props} codiceUnivoco={this.state.codiceUnivoco} username={this.state.username} downloadFile={this.downloadFile}/>
+                : <Redirect to={window.defConfigurations.url_prefix + "login"} />}
               />
               <Route
                 path={window.defConfigurations.url_prefix + "report"}
                 exact
-                render={(props) => <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>}
+                render={(props) => localStorage.getItem("TOKEN") !== null ?
+                 <Report  {...props} handleTotali={this.handleTotali} statsTotali={this.state.statsTotali}/>
+                 : <Redirect to={window.defConfigurations.url_prefix + "login"} />}
               />
               {/* <Redirect from="/" to={this.state.userType === USER_TYPE.USER && this.state.username !== "" ? window.defConfigurations.url_prefix + "ricerca-clienti" : this.state.username !== "" ? window.defConfigurations.url_prefix + "importa-clienti" : window.defConfigurations.url_prefix + "login"} /> */}
           </Switch>
