@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {REPORT_LABELS} from "./common/Constants";
 
 class Report extends Component {
     state = {  
@@ -6,10 +7,8 @@ class Report extends Component {
         statsTotali: {}
     }
 
-
     componentWillMount(){
-        this.props.handleTotali();
-        
+        this.props.handleTotali();  
     }
 
     componentWillReceiveProps(props) {
@@ -17,39 +16,39 @@ class Report extends Component {
     }
 
     render() {
-        const stats = {...this.state.statsTotali}
+        const {statsTotali} = this.state
         return (
             <div>
                 <h2 className="ricercaClienti text-left">Statistiche</h2>
                 <fieldset className="commondFieldset text-left">
-					Anagrafiche confermate: <span className="font-weight-bold">{stats.totConfirmedRecords}</span>
+					{REPORT_LABELS.ANAGRAFICHE_CONFERMATE} <span className="font-weight-bold">{statsTotali ? statsTotali.totConfirmedRecords : ""}</span>
                     <br />
-                    Anagrafiche con modifica: <span className="font-weight-bold">TDB</span>
+                    {REPORT_LABELS.ANAGRAFICHE_CON_MODIFICA} <span className="font-weight-bold">TDB</span>
                     <br />
-                    Anagrafiche non ancora confermate: <span className="font-weight-bold">{stats.totNotConfirmedRecords}</span>
+                    {REPORT_LABELS.ANAGRAFICHE_NON_CONFERMATE} <span className="font-weight-bold">{statsTotali ? statsTotali.totNotConfirmedRecords : ""}</span>
                     <br />
-                    Totale clienti caricati: <span className="font-weight-bold">{stats.totCustomers}</span>
+                    {REPORT_LABELS.CLIENTI_CARICATI} <span className="font-weight-bold">{statsTotali ? statsTotali.totCustomers : ""}</span>
                 </fieldset>
 
                 <div className="commondFieldsetLabel font-weight-bold text-left">Dettaglio campi modificati</div>
                 <fieldset className="commondFieldset text-left">
-                    Modifica numero di telefono: <span className="font-weight-bold">{stats.totEditedPhone}</span>
+                    {REPORT_LABELS.MODIFICA_NUMERO_TELEFONO} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPhone : ""}</span>
                     <br />
-                    Modifica email: <span className="font-weight-bold">{stats.totEditedEmail}</span>
+                    {REPORT_LABELS.MODIFICA_EMAIL} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedEmail : ""}</span>
                     <br />
-                    Modifica Privacy
+                    {REPORT_LABELS.MODIFCA_PRIVACY}
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 1: <span className="font-weight-bold">{stats.totEditedPrivacy1}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P1} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy1 : ""}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 2: <span className="font-weight-bold">{stats.totEditedPrivacy2}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P2} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy2 : ""}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 3: <span className="font-weight-bold">{stats.totEditedPrivacy3}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P3} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy3 : ""}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 4: <span className="font-weight-bold">{stats.totEditedPrivacy4}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P4} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy4 : ""}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 5: <span className="font-weight-bold">{stats.totEditedPrivacy5}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P5} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy5 : ""}</span>
                     <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;Privacy 6: <span className="font-weight-bold">{stats.totEditedPrivacy6}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{REPORT_LABELS.P6} <span className="font-weight-bold">{statsTotali ? statsTotali.totEditedPrivacy6 : ""}</span>
                 </fieldset>
             </div>
         );

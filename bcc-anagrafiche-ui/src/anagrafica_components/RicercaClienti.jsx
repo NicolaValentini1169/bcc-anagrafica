@@ -81,15 +81,17 @@ export class RicercaClienti extends Component {
     }
 
     render() { 
+        const {filiali} = this.props;
+        const {nagError, ricerca, clienti, cliente, showListaClienti, isConfermata, isNotConfermata} = this.state;
         return ( 
             <div>
             {/* <Navbar username={this.props.username}/> */}
             <h2 className="text-left ricercaClienti">{LABELS.RICERCA_CLIENTE}</h2>
-            <form className={!this.state.nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
+            <form className={!nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
                 <div className="row">
                     <label className="col-1 labelForm noPadding">{LABELS.FILIALE}</label>
                     <Select className="col-md-2" placeholder="Seleziona Filiale" options={
-                        this.props.filiali && this.props.filiali.length !== 0 && this.props.filiali.map(filiale => {
+                        filiali && filiali.length !== 0 && filiali.map(filiale => {
                             return {
                                 value: filiale.id,
                                 label: filiale.nome
@@ -100,24 +102,24 @@ export class RicercaClienti extends Component {
                     />
                     
                     <label className="col-1 labelForm noPadding">{LABELS.NAG}</label>
-                    <input className={`col-md-2 form-control ${this.state.nagError ? "errorInput" : ""}`} placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nag}/>
+                    <input className={`col-md-2 form-control ${nagError ? "errorInput" : ""}`} placeholder="NAG NUMBER" name="nag" minLength={6} onChange={(e) => this.onChangeText(e)} value={ricerca.nag}/>
 
                     <label className="col-1 labelForm noPadding">{LABELS.NOME}</label>
-                    <input className="col-md-2 form-control" placeholder="NOME CLIENTE" name="nome" onChange={(e) => this.onChangeText(e)} value={this.state.ricerca.nome}/>
+                    <input className="col-md-2 form-control" placeholder="NOME CLIENTE" name="nome" onChange={(e) => this.onChangeText(e)} value={ricerca.nome}/>
 
                     <label className="col-md-1 labelForm noPadding">{LABELS.DATA_DI_NASCITA}</label>
                     <DatePicker
                         className="col-md-1"
                         onChange={this.onChange}
-                        value={this.state.ricerca.date}
+                        value={ricerca.date}
                     />
                 </div>
 
-                {this.state.nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> <div > <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div></React.Fragment>
+                {nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> <div > <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div></React.Fragment>
                 : <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>}
             </form>
 
-            {this.state.clienti.length !== 0 && this.state.showListaClienti ?
+            {clienti.length !== 0 && showListaClienti ?
             <table className="table table-striped tableClienti">
                 <thead>
                 <tr>
@@ -129,7 +131,7 @@ export class RicercaClienti extends Component {
                   </tr>
                 </thead>
                 <tbody>
-             {this.state.clienti.map(cliente => {
+             {clienti.map(cliente => {
                  return(<tr key={cliente.id}>
                     <td>{cliente.cab ? cliente.cab : ""}</td>
                     <td>{cliente.nag ? cliente.nag : ""}</td>
@@ -142,18 +144,18 @@ export class RicercaClienti extends Component {
               </table>: ""} 
 
             {/* ANAGRAFICA CONFERMATA */}
-            {this.state.isConfermata ? 
+            {isConfermata ? 
             <div className="text-left bottoneRicerca">
                 <h2 className="col-md-2 offset-md-3">{LABELS.ATTENZIONE}</h2>
                 <p className="col-md-3 offset-md-3">{LABELS.ANAGRAFICA_CLIENTE_TEXT}</p>
-                <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA} {" "} {<Moment format="DD/MM/YYYY">{this.state.cliente.lastModify}</Moment>}</p>
-                <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {this.state.cliente.codice}</p>
+                <p className="col-md-2 offset-md-3">{LABELS.DATA_INSERITA} {" "} {<Moment format="DD/MM/YYYY">{cliente.lastModify}</Moment>}</p>
+                <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {cliente.codice}</p>
                 <button type="button" className="btn btn-primary col-md-1 offset-md-3" onClick={() => this.props.downloadFile()}>{LABELS.SCARICA}</button>
                 <button className="btn btn-primary col-md-1 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
                 </div>
                 : ""}
 
-            {this.state.isNotConfermata ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista} cliente={this.state.cliente} handleVerifyRegistry={this.props.handleVerifyRegistry}/> : ""}
+            {isNotConfermata ? <AnagraficaDaVerificare tornaAllaLista={this.tornaAllaLista} cliente={cliente} handleVerifyRegistry={this.props.handleVerifyRegistry}/> : ""}
             </div>
          );
     }

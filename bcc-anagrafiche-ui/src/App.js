@@ -10,7 +10,7 @@ import axios from "axios";
 import config from "./config.json";
 import dotenv from "dotenv";
 import Report from './anagrafica_components/Report';
-import Navbar from './anagrafica_components/Navbar';
+import Navbar from './anagrafica_components/common/Navbar';
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ class App extends Component {
         window.defConfigurations.REACT_APP_URL_JAVA
       );
     }
-    // this.handleCheckToken(this.props.location.pathname);
+    
    }
 
   handleLogin = (loginRequest) => {
