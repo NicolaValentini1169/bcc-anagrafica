@@ -19,7 +19,8 @@ export class RicercaClienti extends Component {
         clienti: [],
         showListaClienti: false,
         cliente: {},
-        nagError: false
+        nagError: false,
+        filialeError: null
     }
 
     componentWillMount() {
@@ -45,7 +46,9 @@ export class RicercaClienti extends Component {
         let ricerca = {...this.state.ricerca};
 
         ricerca[text.currentTarget.name] = text.currentTarget.value;
-
+        if(text.currentTarget.name === "nag" && text.currentTarget.value.length >= 6)
+        this.setState({ricerca, nagError: false});
+        else
         this.setState({ricerca});
     }
 
@@ -54,18 +57,20 @@ export class RicercaClienti extends Component {
 
         ricerca["filiale"] = filiale.value;
 
-        this.setState({ricerca});
+        this.setState({ricerca, filialeError: filiale.value !== "" ? false : true});
     }
 
     findCliente = () => {
         let ricerca = {...this.state.ricerca}
         
         if(ricerca.date !== null){ricerca.date = moment(ricerca.date).format("MM/DD/YYYY")}
-        if(ricerca.nag.length >= 3){
-            this.setState({nagError: false, isConfermata: false, isNotConfermata: false, showListaClienti: false});
+        if(ricerca.nag.length >= 3 && this.state.ricerca.filiale !== ""){
+            this.setState({nagError: false, isConfermata: false, isNotConfermata: false, showListaClienti: false, filialeError: null});
             this.props.handleFindCliente(ricerca);
         } else {
-            this.setState({nagError: true});
+            ricerca.nag.length >= 3 && ricerca.filiale === "" ? this.setState({filialeError: true}) 
+            : ricerca.nag.length < 3 && ricerca.filiale === "" ? this.setState({nagError: true, filialeError: true}) 
+            : this.setState({nagError: true});
         }
     }
 
@@ -80,9 +85,28 @@ export class RicercaClienti extends Component {
         this.setState({showListaClienti: true, isConfermata: false, isNotConfermata: false});
     }
 
+    renderButtonCerca = () => {
+        return ( <div className="row">
+        <span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
+        <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>)
+    }
+
+    renderSpanNag = () => {
+        return <div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div>
+    }
+
+    renderSpanFiliale = () => {
+        return <div className="row"><span className="text-danger span-error-filiale col-md-2">Selezionare una filiale</span></div>
+    }
+
+    renderSpanNagAndFiliale = () => {
+        return <div className="row"><span className="text-danger span-error-filiale col-md-2">Selezionare una filiale</span> 
+        <span className="text-danger col-md-4 span-error-nag">Il nag deve essere di almeno tre caratteri</span></div>
+    }
+
     render() { 
         const {filiali} = this.props;
-        const {nagError, ricerca, clienti, cliente, showListaClienti, isConfermata, isNotConfermata} = this.state;
+        const {nagError, ricerca, clienti, cliente, showListaClienti, isConfermata, isNotConfermata, filialeError} = this.state;
         return ( 
             <div>
             {/* <Navbar username={this.props.username}/> */}
@@ -90,7 +114,7 @@ export class RicercaClienti extends Component {
             <form className={!nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
                 <div className="row">
                     <label className="col-1 labelForm noPadding">{LABELS.FILIALE}</label>
-                    <Select className="col-md-2" placeholder="Seleziona Filiale" options={
+                    <Select className={`col-md-2 ${filialeError === null ? "" : filialeError ? "reactselect-invalid" : "reactselect-valid"}`} placeholder="Seleziona Filiale" options={
                         filiali && filiali.length !== 0 && filiali.map(filiale => {
                             return {
                                 value: filiale.id,
@@ -114,16 +138,14 @@ export class RicercaClienti extends Component {
                         value={ricerca.date}
                     />
                 </div>
-
-                {nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> 
-                <div className="row"><span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
-                 <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>
-                </React.Fragment>
-                :<div className="row">
-                <span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
-                 <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>}
-                <br /> 
                 
+                {/*here i'm going to see if there is nag error error, if not i'll check filiale error. If both are false then I'll show the simple  */}
+                {/*page without errors. If both are true two errors will be shown  */}
+                {nagError && !filialeError ? <React.Fragment>{this.renderSpanNag()}{this.renderButtonCerca()}</React.Fragment>
+                : filialeError && !nagError ? <React.Fragment>{this.renderSpanFiliale()}{this.renderButtonCerca()}</React.Fragment>
+                : filialeError && nagError ? <React.Fragment>{this.renderSpanNagAndFiliale()}{this.renderButtonCerca()}</React.Fragment>
+                : <React.Fragment>{this.renderButtonCerca()}</React.Fragment>}
+                <br /> 
             </form>
 
             {clienti.length !== 0 && showListaClienti ?
