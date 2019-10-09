@@ -115,8 +115,15 @@ export class RicercaClienti extends Component {
                     />
                 </div>
 
-                {nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> <div > <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div></React.Fragment>
-                : <button type="button" className="btn btn-success bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button>}
+                {nagError ? <React.Fragment><div className="row"><span className="text-danger col-md-10">Il nag deve essere di almeno tre caratteri</span></div> 
+                <div className="row"><span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
+                 <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>
+                </React.Fragment>
+                :<div className="row">
+                <span className="col-md-2 ml-3 mt-4 text-left">* Campi obbligatori</span>
+                 <button type="button" className="btn btn-success col-md-1 offset-md-3 bottoneRicerca" onClick={() => this.findCliente()}>{LABELS.CERCA}</button></div>}
+                <br /> 
+                
             </form>
 
             {clienti.length !== 0 && showListaClienti ?

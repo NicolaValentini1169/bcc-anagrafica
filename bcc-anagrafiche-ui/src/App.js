@@ -26,7 +26,7 @@ class App extends Component {
    }
 
    componentWillMount() {
-
+    //this if handle an eventual modification of URL from the user and redirect it to the login
     if(this.props.location.pathname === "/" || this.props.location.pathname === "" || this.props.location.pathname === window.defConfigurations.url_prefix)
     this.props.history.replace(window.defConfigurations.url_prefix + "login");
     
@@ -48,12 +48,13 @@ class App extends Component {
     axios.post(config.apiLoginEndpoint, loginRequest, conf)
     .then(response => {
         roles = [...response.data.roles];
+        //saving token and username in local storage to persist data for the session
         localStorage.setItem("TOKEN", response.data.accessToken);
         localStorage.setItem("USERNAME", response.data.username);
 
         this.setState({roles: roles, username: response.data.username,
           userType: roles.length === 1 && roles[0].authority === USER_TYPE.USER ? USER_TYPE.USER : USER_TYPE.ADMINISTRATOR})
-
+        //checking if the user logged is a simple user or an admin
         if(roles.length === 1 && roles[0].authority === USER_TYPE.USER){
           this.utilitiesForUser();
           this.props.history.replace(window.defConfigurations.url_prefix + "ricerca-clienti");
@@ -83,7 +84,7 @@ class App extends Component {
     
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
-
+    //this if are needed to check if the user compiled all field or only the required fields. Then create the axios get and handle the response
     if(values.nome !== "" && values.date !== null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
       .then(response => this.setState({clienti: response.data}))
@@ -107,7 +108,7 @@ class App extends Component {
   }
 
 
-  handleTotali = (values) => {
+  handleTotali = () => {
     const headers = { "Authorization": localStorage.getItem("TOKEN")};
     const conf = { headers: { ...headers } };
     axios.get(config.apiStatsTotali, conf)
@@ -147,12 +148,17 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
+  renderNavbar() {
+    //if the page is login navbar must not be shown
+    return this.props.location.pathname === "/" || this.props.location.pathname === "/login"
+      || this.props.location.pathname === window.defConfigurations.url_prefix + "login"
+      || this.props.location.pathname === "" ? "" : <Navbar />;
+  }
+
   render() { 
     return (
       <div className="App">
-        {this.props.location.pathname === "/" || this.props.location.pathname === "/login" 
-        || this.props.location.pathname === window.defConfigurations.url_prefix + "login"
-        || this.props.location.pathname === "" ? "" : <Navbar/>}
+        {this.renderNavbar()}
          <Switch>
               <Route
                 path={window.defConfigurations.url_prefix + "login"}

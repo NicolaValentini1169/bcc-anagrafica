@@ -5,8 +5,8 @@ export const USER_TYPE={
 
 export const LABELS={
     RICERCA_CLIENTE: "Ricerca Clienti",
-    FILIALE: "Filiale:",
-    NAG: "NAG:",
+    FILIALE: "* Filiale:",
+    NAG: "* NAG:",
     NOME: "Nome:",
     DATA_DI_NASCITA: "Data di nascita:",
     ATTENZIONE: "ATTENZIONE",
