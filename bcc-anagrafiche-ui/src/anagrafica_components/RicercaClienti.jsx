@@ -18,6 +18,7 @@ export class RicercaClienti extends Component {
         },
         clienti: [],
         showListaClienti: false,
+        clientiNotFound: null,
         cliente: {},
         nagError: false,
         filialeError: null
@@ -30,7 +31,9 @@ export class RicercaClienti extends Component {
     componentWillReceiveProps(props) {
         if(props.clienti !== undefined && props.clienti.length !== 0 
             && (this.state.isConfermata === false && this.state.isNotConfermata === false && this.state.showListaClienti === false)){
-            this.setState({clienti: props.clienti, showListaClienti: true})
+            this.setState({clienti: props.clienti, showListaClienti: true, clientiNotFound: false})
+        } else if(props.clientiIsEmpty){
+            this.setState({clientiNotFound: true})
         }
     }
 
@@ -46,10 +49,10 @@ export class RicercaClienti extends Component {
         let ricerca = {...this.state.ricerca};
 
         ricerca[text.currentTarget.name] = text.currentTarget.value;
-        if(text.currentTarget.name === "nag" && text.currentTarget.value.length >= 6)
+        if(text.currentTarget.name === "nag" && text.currentTarget.value.length >= 3)
         this.setState({ricerca, nagError: false});
         else
-        this.setState({ricerca});
+        this.setState({ricerca, nagError: true});
     }
 
     onChangeFiliale = (filiale) => {
@@ -106,12 +109,12 @@ export class RicercaClienti extends Component {
 
     render() { 
         const {filiali} = this.props;
-        const {nagError, ricerca, clienti, cliente, showListaClienti, isConfermata, isNotConfermata, filialeError} = this.state;
+        const {nagError, ricerca, clienti, cliente, showListaClienti, isConfermata, isNotConfermata, filialeError, clientiNotFound} = this.state;
         return ( 
             <div>
             {/* <Navbar username={this.props.username}/> */}
             <h2 className="text-left ricercaClienti">{LABELS.RICERCA_CLIENTE}</h2>
-            <form className={!nagError ? "formRicercaClienti" : "formRicercaClientiError"}>
+            <form className={!nagError && !filialeError ? "formRicercaClienti" : "formRicercaClientiError"}>
                 <div className="row">
                     <label className="col-1 labelForm noPadding">{LABELS.FILIALE}</label>
                     <Select className={`col-md-2 ${filialeError === null ? "" : filialeError ? "reactselect-invalid" : "reactselect-valid"}`} placeholder="Seleziona Filiale" options={
@@ -181,6 +184,13 @@ export class RicercaClienti extends Component {
                 <p className="col-md-2 offset-md-3">{LABELS.CODICE_UNIVOCO} {" "} {cliente.codice}</p>
                 <button type="button" className="btn btn-primary col-md-1 offset-md-3" onClick={() => this.props.downloadFile()}>{LABELS.SCARICA}</button>
                 <button className="btn btn-primary col-md-1 offset-1" onClick={() => this.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
+                </div>
+                : ""}
+
+            {clientiNotFound ? 
+            <div className="text-left bottoneRicerca">
+                <h2 className="col-md-2 offset-md-3">{LABELS.ATTENZIONE}</h2>
+                <p className="col-md-3 offset-md-3">Nessuna corrispondenza trovata</p>
                 </div>
                 : ""}
 

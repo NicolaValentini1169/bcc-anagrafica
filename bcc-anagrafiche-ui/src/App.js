@@ -22,7 +22,8 @@ class App extends Component {
     filiali: [],
     clienti: [],
     codiceUnivoco: null,
-    statsTotali: {}
+    statsTotali: {},
+    clientiIsEmpty: false
    }
 
    componentWillMount() {
@@ -87,22 +88,22 @@ class App extends Component {
     //this if are needed to check if the user compiled all field or only the required fields. Then create the axios get and handle the response
     if(values.nome !== "" && values.date !== null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome + "&birthDate=" + values.date , conf)
-      .then(response => this.setState({clienti: response.data}))
+      .then(response => this.setState({clienti: response.data, clientiIsEmpty: response.data.length > 0 ? false : true}))
       .catch(err => console.log(err.response))
     }
     else if(values.nome === "" && values.date !== null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&birthDate=" + values.date , conf)
-      .then(response => this.setState({clienti: response.data}))
+      .then(response => this.setState({clienti: response.data, clientiIsEmpty: response.data.length > 0 ? false : true}))
       .catch(err => console.log(err.response))
     }
     else if(values.nome !== "" && values.date === null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag + "&customerName=" + values.nome , conf)
-      .then(response => this.setState({clienti: response.data}))
+      .then(response => this.setState({clienti: response.data, clientiIsEmpty: response.data.length > 0 ? false : true}))
       .catch(err => console.log(err.response))
     }
     else if(values.nome === "" && values.date === null){
       axios.get(config.apiClienteEndpoint + "?branch=" + values.filiale + "&nag=" + values.nag, conf)
-      .then(response => this.setState({clienti: response.data}))
+      .then(response => this.setState({clienti: response.data, clientiIsEmpty: response.data.length > 0 ? false : true}))
       .catch(err => console.log(err.response))
     }
   }
@@ -172,7 +173,7 @@ class App extends Component {
                                                   username={this.state.username} userType={this.state.userType}
                                                   filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
                                                   clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
-                                                  downloadFile={this.downloadFile}/>}
+                                                  downloadFile={this.downloadFile} clientiIsEmpty={this.state.clientiIsEmpty}/>}
               />
                <Route
                 path={window.defConfigurations.url_prefix + "importa-clienti"}
