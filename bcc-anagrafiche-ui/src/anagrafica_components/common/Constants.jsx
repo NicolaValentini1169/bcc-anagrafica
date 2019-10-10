@@ -1,6 +1,6 @@
 export const USER_TYPE={
     USER: "ROLE_USER",
-    ADMINISTRATOR: "ROLE_ADMINISTRATOR"
+    ADMINISTRATOR: "ROLE_ADMIN"
 }
 
 export const LABELS={
