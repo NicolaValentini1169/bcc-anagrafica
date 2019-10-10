@@ -5,8 +5,8 @@ export const USER_TYPE={
 
 export const LABELS={
     RICERCA_CLIENTE: "Ricerca Clienti",
-    FILIALE: "Filiale:",
-    NAG: "NAG:",
+    FILIALE: "* Filiale:",
+    NAG: "* NAG:",
     NOME: "Nome:",
     DATA_DI_NASCITA: "Data di nascita:",
     ATTENZIONE: "ATTENZIONE",
@@ -31,15 +31,11 @@ export const LABELS={
     TORNA_ALLA_LISTA: "Torna alla lista",
     SI: "Si",
     NO: "No",
-    NON_IMPOSTATA: "Non impostata"
-}
-
-export const CLASSES = {
-    COL_MD_7: "col-md-7",
-    COL_MD_5: "col-md-5",
-    COL_MD_12: "col-md-12",
-    TEXT_LEFT: "text-left",
-    FONT_WEIGHT_BOLD: "font-weight-bold"
+    NON_IMPOSTATA: "Non impostata",
+    CAMPI_OBBLIGATORI: "* Campi obbligatori",
+    NAG_ERROR: "Il nag deve essere di almeno tre caratteri",
+    FILIALE_ERROR: "Selezionare una filiale",
+    NESSUNA_CORRISPONDENZA: "Nessuna corrispondenza trovata"
 }
 
 export const REPORT_LABELS = {
@@ -56,4 +52,12 @@ export const REPORT_LABELS = {
     P4: "Privacy 4:",
     P5: "Privacy 5:",
     P6: "Privacy 6:"
+}
+
+export const ROUTES = {
+    LOGIN: "login",
+    RICERCA_CLIENTI: "ricerca-clienti",
+    IMPORTA_CLIENTI: "importa-clienti",
+    RICERCA_COMPLETATA: "ricerca-completata",
+    REPORT: "report"
 }

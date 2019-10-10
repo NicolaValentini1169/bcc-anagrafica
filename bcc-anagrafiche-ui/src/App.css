@@ -104,7 +104,7 @@ body, html {
 
 .formRicercaClienti {
   border: 1px black solid;
-  height: 150px;
+  height: 160px;
   padding-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
@@ -188,4 +188,20 @@ body, html {
 .noPadding {
   padding-left: 0px !important;
   padding-right: 0px !important;
+}
+
+.reactselect-valid > .css-yk16xz-control {
+  border-color: #28a745;
+}
+
+.reactselect-invalid > .css-yk16xz-control {
+  border-color: #dc3545;
+}
+
+.span-error-filiale {
+  margin-left: 6%;
+}
+
+.span-error-nag {
+  margin-left: 2%;
 }
