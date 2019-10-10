@@ -25,7 +25,6 @@ export class RicercaClienti extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props)
         this.props.handleFindFiliali();
     }
 

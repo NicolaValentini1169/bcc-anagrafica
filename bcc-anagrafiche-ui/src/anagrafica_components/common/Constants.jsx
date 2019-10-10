@@ -38,14 +38,6 @@ export const LABELS={
     NESSUNA_CORRISPONDENZA: "Nessuna corrispondenza trovata"
 }
 
-export const CLASSES = {
-    COL_MD_7: "col-md-7",
-    COL_MD_5: "col-md-5",
-    COL_MD_12: "col-md-12",
-    TEXT_LEFT: "text-left",
-    FONT_WEIGHT_BOLD: "font-weight-bold"
-}
-
 export const REPORT_LABELS = {
     ANAGRAFICHE_CONFERMATE: "Anagrafiche confermate:",
     ANAGRAFICHE_CON_MODIFICA: "Anagrafiche con modifica:",
@@ -60,4 +52,12 @@ export const REPORT_LABELS = {
     P4: "Privacy 4:",
     P5: "Privacy 5:",
     P6: "Privacy 6:"
+}
+
+export const ROUTES = {
+    LOGIN: "login",
+    RICERCA_CLIENTI: "ricerca-clienti",
+    IMPORTA_CLIENTI: "importa-clienti",
+    RICERCA_COMPLETATA: "ricerca-completata",
+    REPORT: "report"
 }
