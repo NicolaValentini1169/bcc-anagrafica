@@ -43,7 +43,7 @@ class AnagraficaDaVerificare extends Component {
                 <button className="btn btn-primary ml-11 mt-3 mb-3 col-md-1 offset-md-3" onClick={() => this.props.tornaAllaLista()}>{LABELS.TORNA_ALLA_LISTA}</button>
                 </div>
             <div className="verifyRegistry row">
-                <label className="col-md-7 text-left font-weight-bold mt-5">{LABELS.NAG}</label>
+                <label className="col-md-7 text-left font-weight-bold mt-5">{LABELS.NAG_TO_SHOW}</label>
                 <label className="col-md-5 text-left font-weight-bold mt-2 underlined">{LABELS.CAMPI_MODIFICATI}</label>
                 <label className="col-md-12 text-left">{nag ? nag : ""}</label>
 
