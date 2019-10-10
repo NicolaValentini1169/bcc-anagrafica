@@ -49,7 +49,7 @@ class App extends Component {
     let roles = [];
 
     axios.post(config.apiLoginEndpoint, loginRequest, conf)
-    .then(response => {console.log(response)
+    .then(response => {
         roles = [...response.data.roles];
         //saving token and username in local storage to persist data for the session
         localStorage.setItem("TOKEN", response.data.accessToken);
@@ -150,13 +150,13 @@ class App extends Component {
               />
               <Route
                 path={window.defConfigurations.url_prefix + ROUTES.RICERCA_CLIENTI}
-                
-                render={(props) => localStorage.getItem("TOKEN") !== null ? <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
-                                                  username={this.state.username} userType={this.state.userType}
-                                                  filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
-                                                  clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
-                                                  downloadFile={this.downloadFile} clientiIsEmpty={this.state.clientiIsEmpty}/> 
-                                                  : <Redirect to={window.defConfigurations.url_prefix + ROUTES.LOGIN} />}
+                render={(props) => localStorage.getItem("TOKEN") !== null ? 
+                <RicercaClienti {...props} handleFindCliente={this.handleFindCliente} 
+                                username={this.state.username} userType={this.state.userType}
+                                filiali={this.state.filiali} handleFindFiliali={this.handleFindFiliali}
+                                clienti={this.state.clienti} handleVerifyRegistry={this.handleVerifyRegistry}
+                                downloadFile={this.downloadFile} clientiIsEmpty={this.state.clientiIsEmpty}/> 
+                          : <Redirect to={window.defConfigurations.url_prefix + ROUTES.LOGIN} />}
               />
                <Route
                 path={window.defConfigurations.url_prefix + ROUTES.IMPORTA_CLIENTI}

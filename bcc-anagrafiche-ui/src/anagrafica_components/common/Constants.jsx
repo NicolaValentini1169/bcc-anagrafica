@@ -1,12 +1,13 @@
 export const USER_TYPE={
     USER: "ROLE_USER",
-    ADMINISTRATOR: "ROLE_ADMINISTRATOR"
+    ADMINISTRATOR: "ROLE_ADMIN"
 }
 
 export const LABELS={
     RICERCA_CLIENTE: "Ricerca Clienti",
     FILIALE: "* Filiale:",
     NAG: "* NAG:",
+    NAG_TO_SHOW: "NAG",
     NOME: "Nome:",
     DATA_DI_NASCITA: "Data di nascita:",
     ATTENZIONE: "ATTENZIONE",
