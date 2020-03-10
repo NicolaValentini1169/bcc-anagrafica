@@ -25,7 +25,7 @@ import eu.winwinit.bcc.service.OrdineService;
 public class OrdineController {
 	
 	/*
-	 * test per git
+	 * test per git 2
 	 * */
 
 	@Autowired
