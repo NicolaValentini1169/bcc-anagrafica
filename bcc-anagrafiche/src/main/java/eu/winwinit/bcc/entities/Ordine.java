@@ -10,6 +10,10 @@ import javax.persistence.*;
 public class Ordine implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	/*
+	 * test per git
+	 * */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

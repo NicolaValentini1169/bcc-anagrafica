@@ -23,6 +23,10 @@ import eu.winwinit.bcc.service.OrdineService;
 @RestController
 @RequestMapping("/api/v1")
 public class OrdineController {
+	
+	/*
+	 * test per git
+	 * */
 
 	@Autowired
 	OrdineService ordineService;
