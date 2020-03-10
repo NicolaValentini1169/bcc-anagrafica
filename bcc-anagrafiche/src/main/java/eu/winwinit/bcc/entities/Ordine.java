@@ -12,7 +12,7 @@ public class Ordine implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/*
-	 * test per git 2
+	 * test per git 3
 	 * */
 
 	@Id
