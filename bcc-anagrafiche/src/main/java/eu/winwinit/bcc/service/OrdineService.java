@@ -3,6 +3,7 @@ package eu.winwinit.bcc.service;
 import java.util.List;
 import java.util.Optional;
 
+import eu.winwinit.bcc.entities.Articolo;
 import eu.winwinit.bcc.entities.Ordine;
 
 public interface OrdineService {

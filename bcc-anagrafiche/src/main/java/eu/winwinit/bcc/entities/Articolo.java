@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Entity implementation class for Entity: Articolo
  *
@@ -16,21 +18,22 @@ public class Articolo implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
 	private Integer id;
+	
 	private String nome;
 	private String descrizione; // non necessaria
 	private Integer quantita;
 	private String fornitore; // poi class Fornitore
 	private Double prezzo_acq_prod;
 	private Double prezzo_vend; // non necessario perchè se utilizzato da azienda non viene venduto direttamente
+	
+	@OneToMany(mappedBy = "articolo")
+	@JsonIgnore
+    private Set<Carrello> carrello;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "articoli")
-	private Set<Ordine> ordini; // FK
-
-//	public Set<Ordine> getOrdini() {
-//		return this.ordini;
-//	}
+	// vecchio metodo con ManyToMany
+//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "articoli") // funziona
+//	private Set<Ordine> ordini; // FK
 
 	public Articolo() {
 		super();
@@ -113,5 +116,11 @@ public class Articolo implements java.io.Serializable {
 	public void setPrezzo_vend(Double prezzo_vend) {
 		this.prezzo_vend = prezzo_vend;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Articolo [id=" + id + ", nome=" + nome + ", descrizione=" + descrizione + ", quantita=" + quantita
+				+ ", fornitore=" + fornitore + ", prezzo_acq_prod=" + prezzo_acq_prod + ", prezzo_vend=" + prezzo_vend
+				+ "]";
+	}
 }
